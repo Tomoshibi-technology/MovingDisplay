@@ -8,48 +8,54 @@ TRANSMIT::TRANSMIT(HardwareSerial* pt_port){
 
 void TRANSMIT::start(int id, int send_or_receive){
     PORT -> write(250);
-    PORT -> write(send_or_receive*10 + id);
+    PORT -> write(id*10 + send_or_receive);
 }
 
 
-void TRANSMIT::send(byte* pt_input_array){
+void TRANSMIT::send(byte* pt_input_array, int length_of_array){
     int sum = 0;
-    for(int i = 0; i < sizeof(pt_input_array); i++){
+    for(int i = 0; i < length_of_array; i++){
         PORT -> write(pt_input_array[i]);
         sum = sum + pt_input_array[i];
     }
+    Serial.println(length_of_array);
     int checksum = 255 - (sum % 256);
     PORT -> write(checksum);
 }
 
 
 void TRANSMIT::recieve(byte* pt_output_array){
-    int n = 0, i = 0, sum = 0;
-    byte receive_data[] = {};
+    int n = 0, sum = 0, i = 0;
+    byte receive_data[] = {0,0,0,0,0,0,0,0,0,0};
     long mytime = millis();
+
     while(n < 2){
         if(PORT->available() > 0){
             PORT->read();
             n++;
         }
-        if(millis()>mytime+100){
+        if(millis()>mytime+10){
             break;
         }
     }
+
     mytime = millis();
+
     while(true){
         if(PORT->available() > 0){
             receive_data[i] =  PORT->read();
             sum = sum + receive_data[i];
+            // Serial.println(receive_data[i]);
             i++;
         }
-        if(millis()>mytime+100){
-            sum = sum - receive_data[sizeof(receive_data)-1];
+        if(millis()>mytime+10){
+            sum = sum - receive_data[i-1];
             break;
         }
     }
-    if(255 - (sum%256) == receive_data[sizeof(receive_data)-1]){
-        for(int j = 0; j < sizeof(receive_data); j++){
+
+    if(255 - (sum%256) == receive_data[i-1]){
+        for(int j = 0; j < i-1; j++){
             pt_output_array[j] = receive_data[j];
         }
     }
