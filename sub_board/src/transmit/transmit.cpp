@@ -24,7 +24,7 @@ void TRANSMIT::send(byte* pt_input_array, int length_of_array){
     delay(10);
 }
 
-
+/*
 void TRANSMIT::recieve(byte* pt_output_array){
     int n = 0, sum = 0, i = 0;
     byte receive_data[] = {0,0,0,0,0,0,0,0,0,0};
@@ -61,3 +61,4 @@ void TRANSMIT::recieve(byte* pt_output_array){
         }
     }
 }
+*/
