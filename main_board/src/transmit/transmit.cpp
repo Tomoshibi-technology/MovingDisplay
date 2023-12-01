@@ -32,7 +32,7 @@ void TRANSMIT::recieve(byte* pt_output_array){
 
     while(n < 2){
         if(PORT->available() > 0){
-            PORT->read();
+            int d = PORT->read();
             n++;
         }
         if(millis()>mytime+10){
@@ -41,12 +41,12 @@ void TRANSMIT::recieve(byte* pt_output_array){
     }
 
     mytime = millis();
+    i = 0;
 
     while(true){
         if(PORT->available() > 0){
             receive_data[i] =  PORT->read();
             sum = sum + receive_data[i];
-            // Serial.println(receive_data[i]);
             i++;
         }
         if(millis()>mytime+10){

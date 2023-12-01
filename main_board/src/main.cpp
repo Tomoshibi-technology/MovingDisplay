@@ -23,6 +23,8 @@ void setup() {
   digitalWrite(PA4,1);
 }
 
+long hoge = 0;//この変数に送られてきた数字が入るよ
+
 void loop() {
 
   for(int sub_ID = 1; sub_ID < 5 ;sub_ID++){
@@ -32,6 +34,8 @@ void loop() {
 
     transmit_port2.start(sub_ID,2);
     transmit_port2.recieve(recieve_array);
+
+    array_2_num(recieve_array, sizeof(recieve_array),&hoge);
 
     for(int j = 0; j < sizeof(recieve_array); j++){
       recieve_array[j]=0;

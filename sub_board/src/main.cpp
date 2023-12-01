@@ -26,29 +26,18 @@ void setup() {
   digitalWrite(PA0,1);
 }
 
-int light = 0;
+long hoge = 102003;//好きな数字をこの変数にいれればおくれるよ
 
 byte send_array[10] = {0,0,0,0,0,0,0,0,0,0};
 byte recieve_array[10] = {0,0,0,0,0,0,0,0,0,0};
 
 void loop() {
   int my_ID = readID();
-  int i = 0;
-
-  while(port1.available()>0){
-    recieve_array[i] = port1.read();
-
-    if(recieve_array[i]==my_ID*10+2){
-      send_array[0]=my_ID*10+7;
-      send_array[1]=my_ID*10+8;
-      send_array[2]=my_ID*10+9;
-
-      transmit_port1.start(my_ID,2);
-      transmit_port1.send(send_array,sizeof(send_array));
-    }
-    i++;
+  int d = port1.read();
+  if(d==250){
+    num_2_array(send_array, sizeof(send_array),&hoge);
+    transmit_port1.recieve_send(recieve_array, send_array, my_ID, sizeof(send_array));
   }
-
   delay(1);
 }
 
