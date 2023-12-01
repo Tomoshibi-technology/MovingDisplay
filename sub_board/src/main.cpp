@@ -7,6 +7,8 @@ HardwareSerial port1 = HardwareSerial(PA10,PA9);
 TRANSMIT transmit_port1 = TRANSMIT(&port1);
 
 int readID();
+void num_2_array(byte* pt_input_array, int length_of_array, long* num);
+void array_2_num(byte* pt_output_array,  int length_of_array, long* num);
 
 void setup() {
   // put your setup code here, to run once:
@@ -56,4 +58,23 @@ int readID(){
   else if(digitalRead(PB1)==1){return 3;}
   else if(digitalRead(PB5)==1){return 4;}
   else{return 99;}
+}
+
+void num_2_array(byte* pt_input_array, int length_of_array, long* num){
+  long n = *num;
+  n += 1000000;
+  for(int i = 0; i<length_of_array; i++){
+    pt_input_array[i]=(n%100)+50;
+    n = int(n / 100);
+  }
+}
+
+void array_2_num(byte* pt_output_array,  int length_of_array, long* num){
+  *num = 0;
+  int hyaku = 1;
+  for(int i = 0; i<length_of_array; i++){
+    *num = *num + ((pt_output_array[i]-50)*hyaku);
+    hyaku = hyaku * 100;
+  }
+  *num -= 1000000;
 }

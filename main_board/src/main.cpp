@@ -10,7 +10,7 @@ HardwareSerial port2 = HardwareSerial(PC5, PB10);
 TRANSMIT transmit_port2(&port2);
 
 byte send_array[]={0,0,0,0,0,0,0,0,0,0};
-byte recieve_array[]={97,87,89,0,0,0,0,0,0,0};
+byte recieve_array[]={0,0,0,0,0,0,0,0,0,0};
 
 void setup() {
   Serial.begin(115200);
@@ -41,15 +41,13 @@ void loop() {
   }
 }
 
-
 //-----------------
-
 
 void num_2_array(byte* pt_input_array, int length_of_array, long* num){
   long n = *num;
   n += 1000000;
   for(int i = 0; i<length_of_array; i++){
-    pt_input_array[i]=n%100;
+    pt_input_array[i]=(n%100)+50;
     n = int(n / 100);
   }
 }
@@ -58,7 +56,7 @@ void array_2_num(byte* pt_output_array,  int length_of_array, long* num){
   *num = 0;
   int hyaku = 1;
   for(int i = 0; i<length_of_array; i++){
-    *num = *num + (pt_output_array[i]*hyaku);
+    *num = *num + ((pt_output_array[i]-50)*hyaku);
     hyaku = hyaku * 100;
   }
   *num -= 1000000;
