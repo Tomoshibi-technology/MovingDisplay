@@ -1,5 +1,10 @@
 
-odometry_program/.vscode/launch.json
-odometry_program/.vscode/settings.json
-odometry_program/.vscode/settings.json
-odometry_program/.vscode/c_cpp_properties.json
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+!default.code-workspace
+.devcontainer/devcontainer.json
+.devcontainer/docker-compose.override.yml
