@@ -1,18 +1,18 @@
-#include "./transmit.h"
+#include "./transmit_parts.h"
 
 
-TRANSMIT::TRANSMIT(HardwareSerial* pt_port){
+TRANSMIT_PARTS::TRANSMIT_PARTS(HardwareSerial* pt_port){
     PORT = pt_port;
 }
 
 
-void TRANSMIT::start(int id, int send_or_receive){
+void TRANSMIT_PARTS::start(int id, int send_or_receive){
     PORT -> write(250);
     PORT -> write(id*10 + send_or_receive);
 }
 
 
-void TRANSMIT::send(byte* pt_input_array, int length_of_array){
+void TRANSMIT_PARTS::send(byte* pt_input_array, int length_of_array){
     int sum = 0;
     for(int i = 0; i < length_of_array; i++){
         PORT -> write(pt_input_array[i]);
@@ -25,7 +25,7 @@ void TRANSMIT::send(byte* pt_input_array, int length_of_array){
 }
 
 
-void TRANSMIT::recieve(byte* pt_output_array){
+void TRANSMIT_PARTS::recieve(byte* pt_output_array){
     int n = 0, sum = 0, i = 0;
     byte receive_data[] = {0,0,0,0,0,0,0,0,0,0};
     long mytime = millis();
