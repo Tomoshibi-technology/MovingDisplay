@@ -3,15 +3,9 @@
 #include "./motor/motor.h"
 #include "./transmit/transmit.h"
 
-// const int RX_PIN = PA10;
-// const int TX_PIN = PA9;
-// const int ID_SWITCH_PIN[4] = {PA7,PB0,PB1,PB5};
-const int LED_PIN[2] = {PA1, PA0};
-// const int MD_PWM_PIN[2] = {PA8, PA12};
-
 
 ENCODER encoder(&Wire, 400000);
-MOTOR motor(PA8, PA12, &encoder);
+MOTOR motor(PB5, PB4, &encoder);
 
 HardwareSerial port1 = HardwareSerial(PA10,PA9);
 TRANSMIT transmit_port1 = TRANSMIT(&port1);
@@ -24,6 +18,7 @@ void array_2_num(byte* pt_output_array,  int length_of_array, long* num);
 void setup() {
 	Serial.begin(115200);
 	Serial.println(155);
+	port1.begin(115200);
 	encoder.init();
 	motor.init();
 }
@@ -35,9 +30,6 @@ byte send_array[10] = {0,0,0,0,0,0,0,0,0,0};
 byte recieve_array[10] = {0,0,0,0,0,0,0,0,0,0};
 
 void loop() {
-	pinMode(LED_PIN[0], OUTPUT);
-	digitalWrite(LED_PIN[0], HIGH);
-
 	//毎ループやらないと詰むやつ
 	encoder.read_angle();
 	encoder.calc_revolution();
@@ -49,29 +41,22 @@ void loop() {
 	int receive_speed = 0;
 
 	//ここから通信
-	int my_ID = readID();
+	int my_ID = 5;
   int d = port1.read();
 
 	long rev = motor.get_rev(); // 回転数取得
+	// Serial.println(rev);
 
   if(d==250){
     num_2_array(send_array, sizeof(send_array),&rev);
     transmit_port1.recieve_send(recieve_array, send_array, my_ID, sizeof(send_array));
-
+		// for(int i = 0; i<sizeof(recieve_array); i++){
+		// 	Serial.print(recieve_array[i]);
+		// 	Serial.print(" ");
+		// }
 		receive_speed = recieve_array[0] - 100;
   }
 	// ここまで通信
-
-	// ここから回転
-	// 50-100 逆転
-	// 100-150 正転
-	motor.speed_rotate(receive_speed);
-	
-	// motor.speed_rotate(20*sin(n));
-	// n+=0.0001;
-	
-	// ここまで回転
-
 
 
 	// ここからデバッグ用
@@ -91,6 +76,9 @@ void readID_init(){
 
 
 int readID(){
+
+	return 5;
+
   if(digitalRead(PA7)==1){return 1;}
   else if(digitalRead(PB0)==1){return 2;}
   else if(digitalRead(PB1)==1){return 3;}
