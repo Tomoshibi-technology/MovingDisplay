@@ -18,6 +18,7 @@ void array_2_num(byte* pt_output_array,  int length_of_array, long* num);
 void setup() {
 	Serial.begin(115200);
 	Serial.println(155);
+	port1.begin(115200);
 	encoder.init();
 	motor.init();
 }
@@ -44,11 +45,15 @@ void loop() {
   int d = port1.read();
 
 	long rev = motor.get_rev(); // 回転数取得
+	// Serial.println(rev);
 
   if(d==250){
     num_2_array(send_array, sizeof(send_array),&rev);
     transmit_port1.recieve_send(recieve_array, send_array, my_ID, sizeof(send_array));
-
+		// for(int i = 0; i<sizeof(recieve_array); i++){
+		// 	Serial.print(recieve_array[i]);
+		// 	Serial.print(" ");
+		// }
 		receive_speed = recieve_array[0] - 100;
   }
 	// ここまで通信
