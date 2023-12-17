@@ -23,22 +23,26 @@ void setup() {
   pinMode(PB5,INPUT);
 
   digitalWrite(PA1,1);
-  digitalWrite(PA0,1);
+  // digitalWrite(PA0,1);
 }
 
-long hoge = 102003;//好きな数字をこの変数にいれればおくれるよ
+long hoge = 102985;//好きな数字をこの変数にいれればおくれるよ
 
 byte send_array[10] = {0,0,0,0,0,0,0,0,0,0};
 byte recieve_array[10] = {0,0,0,0,0,0,0,0,0,0};
 
+//float i = 0;
+
 void loop() {
+  //hoge = int(300+300*sin(i));
   int my_ID = readID();
-  int d = port1.read();
-  if(d==250){
+  int read_data = port1.read();
+  if(read_data == 250){
     num_2_array(send_array, sizeof(send_array),&hoge);
     transmit_port1.recieve_send(recieve_array, send_array, my_ID, sizeof(send_array));
   }
   delay(1);
+  //i = i + 0.1;
 }
 
 int readID(){
