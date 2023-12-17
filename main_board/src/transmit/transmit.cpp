@@ -14,7 +14,7 @@ void TRANSMIT::init(){
 
 void TRANSMIT::execute(){
 
-    for(int sub_ID = 1; sub_ID <= 5 ;sub_ID++){
+    for(int sub_ID = 1; sub_ID <= 5;sub_ID++){
 
         transmit_port2.start(sub_ID,1);
         transmit_port2.send(send_array,sizeof(send_array));
@@ -22,14 +22,18 @@ void TRANSMIT::execute(){
         transmit_port2.start(sub_ID,2);
         transmit_port2.recieve(recieve_array);
 
-        utility.array_2_num(recieve_array, sizeof(recieve_array),&hoge);
-        Serial.print(sub_ID);Serial.print("/");
-        Serial.println(hoge);
+        if(sub_ID ==5){
+            utility.array_2_num(recieve_array, sizeof(recieve_array),&hoge);
+        // Serial.print(sub_ID);Serial.print("/");
+        // Serial.println(hoge);
+        }
 
         for(int j = 0; j < sizeof(recieve_array); j++){
+            // Serial.print(recieve_array[j]);Serial.print(",");
             recieve_array[j]=0;
         }
         //delay(20);
+        // Serial.println("");
     }
     Serial.println("------");
 

@@ -30,24 +30,25 @@ float i = 0;
 
 void loop() {
   transmit.execute();
+  x_coord = transmit.hoge;
+  x_coord = int(x_coord*18.2/4095);
 
   pixels_A.clear();
   pixels_B.clear();
   pixels_C.clear();
-
-  sx = 24;
 
 	for (int ipy = 0; ipy < panel_ver; ipy++){
 		for (int ipx = 0; ipx < panel_hor; ipx++){
 
       float px = ipx + x_coord;
       int py = ipy;
-      float py_plus_out = sqrt(289+289*sin(i)-(px-sx)*(px-sx)) + sy;
-      float py_minus_out = -sqrt(289+289*sin(i)-(px-sx)*(px-sx)) + sy;
+      float py_plus_out = sqrt(225-(px-sx)*(px-sx)) + sy;
+      float py_minus_out = -sqrt(225-(px-sx)*(px-sx)) + sy;
       // int px2 = px;
 
 	    if(py >= py_minus_out and py <= py_plus_out){
-				r = 10 + 10*sin(i); b = 10 + 10*cos(i); g = 0;
+				//r = 10 + 10*sin(i); b = 10 + 10*cos(i); g = 0;
+        r = 20; g = 0; b = 0;
       }else{
         r = 5; g = 5; b = 5;
       }

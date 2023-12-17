@@ -16,11 +16,12 @@ class TRANSMIT{
         byte send_array[10]={50,60,70,80,90,100,110,0,0,0};
         byte recieve_array[10]={0,0,0,0,0,0,0,0,0,0};
 
-        long hoge = 0;//この変数に送られてきた数字が入るよ
+        //long hoge = 0;//この変数に送られてきた数字が入るよ
 
     public:
         TRANSMIT();
         void execute();
         void init();
         void test();
+        long hoge = 0;
 };
