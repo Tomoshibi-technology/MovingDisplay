@@ -1,63 +1,36 @@
 #include "./transmit.h"
 
+TRANSMIT::TRANSMIT(){}
 
-TRANSMIT::TRANSMIT(HardwareSerial* pt_port){
-    PORT = pt_port;
+void TRANSMIT::init(){
+    port2.begin(115200);
+    pinMode(PA4,OUTPUT);
+    pinMode(PA5,OUTPUT);
+    pinMode(PB0,INPUT);
+
+    delay(100);
+    digitalWrite(PA4,1);
 }
 
+void TRANSMIT::execute(){
 
-void TRANSMIT::start(int id, int send_or_receive){
-    PORT -> write(250);
-    PORT -> write(id*10 + send_or_receive);
-}
+    for(int sub_ID = 1; sub_ID <= 5 ;sub_ID++){
 
+        transmit_port2.start(sub_ID,1);
+        transmit_port2.send(send_array,sizeof(send_array));
 
-void TRANSMIT::send(byte* pt_input_array, int length_of_array){
-    int sum = 0;
-    for(int i = 0; i < length_of_array; i++){
-        PORT -> write(pt_input_array[i]);
-        sum = sum + pt_input_array[i];
+        transmit_port2.start(sub_ID,2);
+        transmit_port2.recieve(recieve_array);
+
+        utility.array_2_num(recieve_array, sizeof(recieve_array),&hoge);
+        Serial.print(sub_ID);Serial.print("/");
+        Serial.println(hoge);
+
+        for(int j = 0; j < sizeof(recieve_array); j++){
+            recieve_array[j]=0;
+        }
+        //delay(20);
     }
-    //Serial.println(length_of_array);
-    int checksum = 255 - (sum % 256);
-    PORT -> write(checksum);
-    delay(10);
-}
+    Serial.println("------");
 
-
-void TRANSMIT::recieve(byte* pt_output_array){
-    int n = 0, sum = 0, i = 0;
-    byte receive_data[] = {0,0,0,0,0,0,0,0,0,0};
-    long mytime = millis();
-
-    while(n < 2){
-        if(PORT->available() > 0){
-            int d = PORT->read();
-            n++;
-        }
-        if(millis()>mytime+10){
-            break;
-        }
-    }
-
-    mytime = millis();
-    i = 0;
-
-    while(true){
-        if(PORT->available() > 0){
-            receive_data[i] =  PORT->read();
-            sum = sum + receive_data[i];
-            i++;
-        }
-        if(millis()>mytime+10){
-            sum = sum - receive_data[i-1];
-            break;
-        }
-    }
-
-    if(255 - (sum%256) == receive_data[i-1]){
-        for(int j = 0; j < i-1; j++){
-            pt_output_array[j] = receive_data[j];
-        }
-    }
 }

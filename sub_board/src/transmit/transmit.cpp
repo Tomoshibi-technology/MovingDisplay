@@ -50,11 +50,12 @@ void TRANSMIT::recieve_send(byte* pt_output_array, byte* pt_input_array, int id,
         send(pt_input_array,length_of_array);
     }
     else if(receive_data_f[0]==id*10+1){
+        Serial.println(receive_data_f[0]);
         while(true){
             if(PORT->available() > 0){
                 receive_data[i] =  PORT->read();
                 sum = sum + receive_data[i];
-                // Serial.println(receive_data[i]);
+                Serial.println(receive_data[i]);
                 // delay(1);
                 i++;
             }
@@ -73,5 +74,5 @@ void TRANSMIT::recieve_send(byte* pt_output_array, byte* pt_input_array, int id,
     }else{
     }
 
-    // Serial.println("---");
+    Serial.println("---");
 }
