@@ -11,7 +11,7 @@
       "cwd": "c:/Tomoshibi/MovingDisplay/odometry_program/src",
       "program": "c:/Tomoshibi/MovingDisplay/odometry_program/src/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
+      "miDebuggerPath": "C:/Users/saiju/.platformio/packages/toolchain-gdbarmnoneeabi/bin/arm-none-eabi-gcc.exe",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
