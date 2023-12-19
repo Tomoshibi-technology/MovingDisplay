@@ -11,7 +11,7 @@ void LED_PARTS::init(){
 
 
 
-void LED_PARTS::make_id3(int x, int y, int* panel_a_id, int* panel_b_id, int* panel_c_id, int* panel_n){
+void LED_PARTS::set_id(int x, int y, int* panel_a_id, int* panel_b_id, int* panel_c_id, int* panel_n){
     int return_id = 0;
 	//y = 47 - y;//ここも書き換えること！
 
@@ -67,13 +67,12 @@ void LED_PARTS::set_under(float px, float py, int ur, int ug, int ub){
 
 
 
-void LED_PARTS::set_circle(float px, float py, int x_coord, int ro, int sx, int sy){
+void LED_PARTS::set_circle(float px, float py, int ro, int sx, int sy){
     float py_plus_out = sqrt(ro*ro-(px-sx)*(px-sx)) + sy;
     float py_minus_out = -sqrt(ro*ro-(px-sx)*(px-sx)) + sy;
     if(py >= py_minus_out and py <= py_plus_out){
         r = 20; g = 0; b = 0;
-    }else{
-    }
+    }else{}
 }
 
 void LED_PARTS::set_color(int ipx, int ipy, int panel_a_id, int panel_b_id, int panel_c_id, int panel_n){
