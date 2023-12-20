@@ -75,6 +75,19 @@ void LED_PARTS::set_circle(float px, float py, int ro, int sx, int sy){
     }else{}
 }
 
+void LED_PARTS::set_square(float px, float py, float sd, int dg, int sx, int sy){
+    float out;
+    if(dg % 90==0){
+        out = abs((px-sx)+(py-sy)) + abs((px-sx)-(py-sy)) - sd;
+    }else{
+        out = abs(px-sx)+abs(py-sy) - int(sd*sin(dg*(3.14/180)));
+    }
+    
+    if(out == 0){
+        r = 0; g = 0; b = 20;
+    }else{}
+}
+
 void LED_PARTS::set_color(int ipx, int ipy, int panel_a_id, int panel_b_id, int panel_c_id, int panel_n){
     if(panel_n == 0){
         pixels_A.setPixelColor(panel_a_id, pixels_A.Color(r,g,b));

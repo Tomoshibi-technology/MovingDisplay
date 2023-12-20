@@ -7,11 +7,11 @@
 TRANSMIT transmit1 = TRANSMIT(1);
 TRANSMIT transmit2 = TRANSMIT(2);
 
-LED led1 = LED();
+LED led = LED();
 
 void setup() {
   Serial.begin(115200);
-  led1.init();
+  led.init();
   transmit1.init();
   transmit2.init();
 }
@@ -21,10 +21,7 @@ void loop() {
   int x_coord = transmit2.hoge;
   x_coord = int(x_coord*18.21/4095);
   //Serial.println(x_coord);
-  led1.execute(x_coord);
-
-    
-
+  led.execute1(x_coord);
   //delay(10);
 }
 

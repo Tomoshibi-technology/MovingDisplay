@@ -22,6 +22,7 @@ class LED_PARTS{
         void init();
         void set_id(int x, int y, int* panel_a_id, int* panel_b_id, int* panel_c_id, int* panel_n);
         void set_circle(float px, float py, int ro, int sx, int sy);
+        void set_square(float px, float py, float sd1, float sd2, int dg, int sx, int sy);
         void set_under(float px, float py, int ur, int ug, int ub);
         void set_color(int ipx, int ipy, int panel_a_id, int panel_b_id, int panel_c_id, int panel_n);
         void show();

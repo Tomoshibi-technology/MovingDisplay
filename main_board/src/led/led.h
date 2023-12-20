@@ -14,5 +14,5 @@ class LED{
     public:
         LED();
         void init();
-        void execute(int x_coord);
+        void execute1(int x_coord);
 };
