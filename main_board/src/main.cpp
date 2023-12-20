@@ -19,7 +19,7 @@ void setup() {
 void loop() {
   transmit2.execute();
   int x_coord = transmit2.hoge;
-  x_coord = int(x_coord*18.21/4095);
+  x_coord = int(x_coord*0.00445);
   //Serial.println(x_coord);
   int mytime = micros();
   led.execute1(x_coord);
