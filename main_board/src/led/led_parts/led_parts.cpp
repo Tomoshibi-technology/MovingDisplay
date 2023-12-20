@@ -75,15 +75,10 @@ void LED_PARTS::set_circle(float px, float py, int ro, int sx, int sy){
     }else{}
 }
 
-void LED_PARTS::set_square(float px, float py, float sd, int dg, int sx, int sy){
-    float out;
-    if(dg % 90==0){
-        out = abs((px-sx)+(py-sy)) + abs((px-sx)-(py-sy)) - sd;
-    }else{
-        out = abs(px-sx)+abs(py-sy) - int(sd*sin(dg*(3.14/180)));
-    }
-    
-    if(out == 0){
+void LED_PARTS::set_square(float px, float py, float sd1, float sd2, int dg, int sx, int sy){
+    float px_out = (px-sx)*cos(-dg*(3.14/180)) - (py-sy)*sin(-dg*(3.14/180)) + sx;
+    float py_out = (py-sy)*cos(-dg*(3.14/180)) + (px-sx)*sin(-dg*(3.14/180)) + sy;
+    if((px_out >= sx and px_out <= sx + sd1) and (py_out >= sy and py_out <= sy+sd2)){
         r = 0; g = 0; b = 20;
     }else{}
 }
