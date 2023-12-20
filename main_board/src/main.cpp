@@ -21,7 +21,9 @@ void loop() {
   int x_coord = transmit2.hoge;
   x_coord = int(x_coord*18.21/4095);
   //Serial.println(x_coord);
+  int mytime = micros();
   led.execute1(x_coord);
+  Serial.println(micros()-mytime);
   //delay(10);
 }
 
