@@ -19,18 +19,18 @@ class LED_PARTS{
 
         int r,g,b; 
         int x_coord = 0;
-        double i = 0;
+        int i = 0;
 
     public:
         LED_PARTS();
         void init();
         void set_id(int x, int y, int* panel_a_id, int* panel_b_id, int* panel_c_id, int* panel_n);
-        void set_circle(double px, double py, int ro, int sx, int sy);
-        //void set_square(double px, double py, double sd1, double sd2, int dg, int sx, int sy);
+        void set_circle(int px, int py, int ro, int sx, int sy);
         void set_square(int px, int py, int sd1, int sd2, int dg, int sx, int sy);
-        void set_under(double px, double py, int ur, int ug, int ub);
+        //void set_square(int px, int py, int sd1, int sd2, int dg, int sx, int sy);
+        void set_under(int px, int py, int ur, int ug, int ub);
         void set_color(int ipx, int ipy, int panel_a_id, int panel_b_id, int panel_c_id, int panel_n);
         void show();
-        double sisin(int degree);
-        double cocos(int degree);
+        int sisin(int degree);
+        int cocos(int degree);
 };

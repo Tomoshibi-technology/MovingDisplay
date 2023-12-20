@@ -12,10 +12,12 @@ class LED{
         double i = 0;
         int panel_A_ID = 1000; int panel_B_ID = 1000; int panel_C_ID = 1000; int panel_N = 1000;
         int panel_ver = 48; int panel_hor = 48; //RGBのマックス,パネルの縦横LED数
-        double px, py;
+        int px, py;
 
     public:
         LED();
         void init();
-        void execute1(int x_coord);
+        void execute2(int now_time, int start_time, int end_time, int x_coord);
+        void execute1(int now_time, int start_time, int end_time, int x_coord);
+        void execute0(int now_time, int start_time, int end_time, int x_coord);
 };
