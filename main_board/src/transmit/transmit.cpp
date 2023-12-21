@@ -26,18 +26,18 @@ void TRANSMIT::execute(){
             transmit_port2.start(sub_ID,2);
             transmit_port2.recieve(recieve_array);
 
-            if(sub_ID ==5){
-                utility.array_2_num(recieve_array, sizeof(recieve_array),&hoge);
-            // Serial.print(sub_ID);Serial.print("/");
-            // Serial.println(hoge);
-            }
-
             for(int j = 0; j < sizeof(recieve_array); j++){
                 // Serial.print(recieve_array[j]);Serial.print(",");
                 recieve_array[j]=0;
             }
-            //delay(20);
-            // Serial.println("");
+
+            if(sub_ID ==5){
+                utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
+            }
+            // if(sub_ID ==6){
+            //     utility.array_2_num(recieve_array, sizeof(recieve_array),&y);
+            // }
+            Serial.println("");
         }
     }else if(PN == 1){
         for(int sub_ID = 5; sub_ID <= 6;sub_ID++){
@@ -48,11 +48,12 @@ void TRANSMIT::execute(){
             transmit_port1.start(sub_ID,2);
             transmit_port1.recieve(recieve_array);
 
-            if(sub_ID ==5){
-                utility.array_2_num(recieve_array, sizeof(recieve_array),&hoge);
-            // Serial.print(sub_ID);Serial.print("/");
-            // Serial.println(hoge);
-            }
+            // if(sub_ID ==5){
+            //     utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
+            // }
+            // if(sub_ID ==6){
+            //     utility.array_2_num(recieve_array, sizeof(recieve_array),&y);
+            // }
 
             for(int j = 0; j < sizeof(recieve_array); j++){
                 // Serial.print(recieve_array[j]);Serial.print(",");

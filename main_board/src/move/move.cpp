@@ -1,5 +1,6 @@
 #include "./move.h"
 
+MOVE::MOVE(){}
 void MOVE::init(){
 
 }

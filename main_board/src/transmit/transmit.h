@@ -14,10 +14,10 @@ class TRANSMIT{
 
         UTILITY utility = UTILITY();
 
+        int PN;
+
         byte send_array[10]={50,60,70,80,90,100,110,0,0,0};
         byte recieve_array[10]={0,0,0,0,0,0,0,0,0,0};
-
-        int PN;
 
         //long hoge = 0;//この変数に送られてきた数字が入るよ
 
@@ -26,5 +26,6 @@ class TRANSMIT{
         void execute();
         void init();
         void test();
-        long hoge = 0;
+        long x;
+        long y = 0;
 };
