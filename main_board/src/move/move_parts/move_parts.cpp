@@ -52,5 +52,12 @@ void MOVE_PARTS::transmit(){
   transmit_motor.start(SUB_ID,1);
   utility.num_2_array(send_array,sizeof(send_array),&motor_speed);
   transmit_motor.send(send_array,sizeof(send_array));
+  // Serial.print("motor_speed ");Serial.println(motor_speed);
+  // Serial.print("calc ");
+  // for(int i = 0;i<10;i++){
+  //   Serial.print(send_array[i]);
+  //   Serial.print(" ");
+  // }
+  // Serial.println("");
 
 }

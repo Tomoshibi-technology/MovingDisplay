@@ -29,10 +29,10 @@ class MOTOR{
 
 		int16_t pre_duty = 0;
 		
-		void rotate(int16_t duty);//-255 - 255
 
 	public:
 		MOTOR(uint8_t a_pin, uint8_t b_pin, ENCODER* pt_enc);
+		void rotate(int16_t duty);//-255 - 255
 		void init();
 		void angle_rotate(uint16_t goal_angle);
 		void speed_rotate(int16_t goal_speed);

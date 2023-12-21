@@ -22,7 +22,7 @@ void TRANSMIT::send(byte* pt_input_array, int length_of_array){
     //Serial.println(length_of_array);
     int checksum = 255 - (sum % 256);
     PORT -> write(checksum);
-    delay(10);
+    delay(1);
 }
 
 
@@ -38,7 +38,7 @@ void TRANSMIT::recieve_send(byte* pt_output_array, byte* pt_input_array, int id,
             // Serial.println( receive_data_f[0]);
             n++;
         }
-        if(millis()>mytime+10){
+        if(millis()>mytime+4){
             break;
         }
     }

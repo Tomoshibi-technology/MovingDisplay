@@ -14,11 +14,14 @@ void TRANSMIT_PARTS::start(int id, int send_or_receive){
 
 void TRANSMIT_PARTS::send(byte* pt_input_array, int length_of_array){
     int sum = 0;
+    // Serial.print("act send ");
     for(int i = 0; i < length_of_array; i++){
         PORT -> write(pt_input_array[i]);
         sum = sum + pt_input_array[i];
+        // Serial.print(pt_input_array[i]);
+        // Serial.print(" ");
     }
-    //Serial.println(length_of_array);
+    // Serial.println("");
     int checksum = 255 - (sum % 256);
     PORT -> write(checksum);
 }

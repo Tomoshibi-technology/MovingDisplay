@@ -26,6 +26,7 @@ void setup() {
 	Serial.println(155);
 	encoder.init();
 	motor.init();
+	port1.begin(115200);
 }
 
 uint32_t roop = 0;
@@ -33,6 +34,8 @@ float n = 0.000;
 
 byte send_array[10] = {0,0,0,0,0,0,0,0,0,0};
 byte recieve_array[10] = {0,0,0,0,0,0,0,0,0,0};
+
+long receive_speed = 0;
 
 void loop() {
 	pinMode(LED_PIN[0], OUTPUT);
@@ -45,12 +48,12 @@ void loop() {
 	//ここまで
 
 
-	// int receive_status = 0;
-	int receive_speed = 0;
+	// int receive_status = 0
 
 	//ここから通信
 	int my_ID = readID();
-  int d = port1.read();
+  	int d = port1.read();
+	// Serial.println("aaa");
 
 	long rev = motor.get_rev(); // 回転数取得
 
@@ -58,7 +61,8 @@ void loop() {
     num_2_array(send_array, sizeof(send_array),&rev);
     transmit_port1.recieve_send(recieve_array, send_array, my_ID, sizeof(send_array));
 
-		receive_speed = recieve_array[0] - 100;
+	array_2_num(recieve_array, sizeof(recieve_array), &receive_speed);
+	// Serial.println(receive_speed);
   }
 	// ここまで通信
 

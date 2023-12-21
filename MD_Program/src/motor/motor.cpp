@@ -26,13 +26,14 @@ void MOTOR::angle_rotate(uint16_t goal_angle){ // 0 - 69(gear_ratio)
 }
 
 void MOTOR::speed_rotate(int16_t goal_speed){ //-50から50 → 100 - 200
-	if(goal_speed > 0){
-		rotate(100 + goal_speed*2);
-	}else if(goal_speed < 0){
-		rotate(-100 + goal_speed*2);
-	}else{
-		rotate(0);
+	if(goal_speed<0){goal_speed = goal_speed - 50;}
+	else if(goal_speed > 0){goal_speed = goal_speed + 50;}
+	if(goal_speed>=MAX_SPEED){
+		goal_speed = MAX_SPEED;
+	}else if(goal_speed <= -1*MAX_SPEED){
+		goal_speed = -1* MAX_SPEED;
 	}
+	rotate(goal_speed);
 }
 
 void MOTOR::calc_speed(){
@@ -69,8 +70,19 @@ void MOTOR::rotate(int16_t duty){ //-255 - 255
 	if(pre_duty*duty < 0){
 		duty = 0;
 	}
-	pre_duty = duty;
+	if(duty>pre_duty +1){
+		duty = pre_duty + 1;
+		Serial.print("aaaaaaaaaaaaa");
+	}else if(duty<pre_duty-1){
+		Serial.print("aaaaaaaaaaaaa");
+		duty = pre_duty - 1;
+	}
+	Serial.print("duty ");
+	Serial.println(duty);
+	Serial.print("pre_duty ");
+	Serial.println(pre_duty);
 
+	pre_duty = duty;
 	if(duty > 0){
 		analogWrite(A_PIN,(duty>MAX_SPEED)?MAX_SPEED:duty);
 		analogWrite(B_PIN,0);
