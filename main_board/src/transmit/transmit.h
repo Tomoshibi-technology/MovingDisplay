@@ -14,7 +14,7 @@ class TRANSMIT{
 
         UTILITY utility = UTILITY();
 
-        byte send_array[10]={50,60,70,80,90,100,110,0,0,0};
+        byte send_array[10]={85,90,100,110,90,100,110,0,0,0};
         byte recieve_array[10]={0,0,0,0,0,0,0,0,0,0};
 
         int PN;
@@ -26,5 +26,6 @@ class TRANSMIT{
         void execute();
         void init();
         void test();
-        long hoge = 0;
+        long x = 0;
+        long y = 0;
 };
