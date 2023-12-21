@@ -9,6 +9,8 @@ void LED_PARTS::init(){
     pixels_C.begin();
 }
 
+
+
 void LED_PARTS::set_id(int x, int y, int* panel_a_id, int* panel_b_id, int* panel_c_id, int* panel_n){
     int return_id = 0;
 	//y = 47 - y;//ここも書き換えること！
@@ -18,11 +20,11 @@ void LED_PARTS::set_id(int x, int y, int* panel_a_id, int* panel_b_id, int* pane
         x = x;
         *panel_n = 0;
     }
-    else if(x > 15 && x <= 31){
+    else if(x > 15 and x <= 31){
         x -= 16;
         *panel_n = 1;
     }
-    else if(x > 31 && x <=47){
+    else if(x > 31 and x <=47){
         x -= 32;
         *panel_n = 2;
     }
@@ -37,10 +39,10 @@ void LED_PARTS::set_id(int x, int y, int* panel_a_id, int* panel_b_id, int* pane
     }
 
     //基板LED対応化
-    if(return_id > 255 && return_id <= 511){
+    if(return_id > 255 and return_id <= 511){
         return_id += 1;
     }
-    if(return_id >511 && return_id <= 767){
+    if(return_id >511 and return_id <= 767){
         return_id += 2;
     }
 
@@ -72,11 +74,10 @@ void LED_PARTS::set_circle(int px, int py, int ro, int sx, int sy){
     }else{}
 }
 
-
 void LED_PARTS::set_square(int px, int py, int sd1, int sd2, int dg, int sx, int sy){
     int px_out = (px-sx)*cos(-dg*0.017444)- (py-sy)*sin(-dg*0.017444) + sx;
     int py_out = (py-sy)*cos(-dg*0.017444) + (px-sx)*sin(-dg*0.017444) + sy;
-    if((px_out >= sx && px_out <= sx + sd1) && (py_out >= sy && py_out <= sy+sd2)){
+    if((px_out >= sx and px_out <= sx + sd1) and (py_out >= sy and py_out <= sy+sd2)){
         r = 0; g = 0; b = 20;
     }else{}
 }
@@ -94,9 +95,9 @@ void LED_PARTS::set_color(int ipx, int ipy, int panel_a_id, int panel_b_id, int 
     }
 }
 
-
 void LED_PARTS::show(){
     pixels_A.show();
     pixels_B.show();
     pixels_C.show();
 }
+

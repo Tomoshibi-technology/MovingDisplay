@@ -21,7 +21,6 @@ void TRANSMIT_PARTS::send(byte* pt_input_array, int length_of_array){
     //Serial.println(length_of_array);
     int checksum = 255 - (sum % 256);
     PORT -> write(checksum);
-    //delay(1);
 }
 
 

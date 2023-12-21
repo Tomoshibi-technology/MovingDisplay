@@ -26,6 +26,7 @@ class TRANSMIT{
         void execute();
         void init();
         void test();
+        long hoge = 0;
         long x;
         long y = 0;
 };
