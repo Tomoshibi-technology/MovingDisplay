@@ -53,7 +53,7 @@ void loop() {
 	//ここから通信
 	int my_ID = readID();
   	int d = port1.read();
-	// Serial.println("aaa");
+	// Serial.println(my_ID);
 
 	long rev = motor.get_rev(); // 回転数取得
 

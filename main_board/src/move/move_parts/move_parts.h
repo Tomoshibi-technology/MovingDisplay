@@ -13,10 +13,10 @@ class MOVE_PARTS{
         int MOTER_DEGREE;
         long motor_speed = 0;
         float motor_rate = 0.7;
-
         HardwareSerial port2 = HardwareSerial(PC5, PB10);
         TRANSMIT_PARTS transmit_motor = TRANSMIT_PARTS(&port2);
         Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28, &Wire);
+
         UTILITY utility = UTILITY();
         byte send_array[10] = {0,0,0,0,0,0,0,0,0,0};
     public:

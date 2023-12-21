@@ -1,12 +1,11 @@
 #include "./move_parts.h"
 MOVE_PARTS::MOVE_PARTS(int sub_ID, int motor_degree){
   SUB_ID = sub_ID;
-  MOTER_DEGREE = motor_degree;
+  MOTER_DEGREE = motor_degree;;
 }
 
 void MOVE_PARTS::init(){
-    port2.begin(115200);
-    bno.begin();
+  port2.begin(115200);
 }
 
 void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y_coord){
@@ -46,12 +45,15 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
 //   Serial.print("dir ");Serial.println(direction);
   motor_speed = int(robot_speed*sin((PI/180)*(direction - MOTER_DEGREE)));
   motor_speed = int((motor_speed * motor_rate) + (roll * (1 - motor_rate)));
+  Serial.print("subid ");Serial.println(SUB_ID);
+  Serial.print("motor_speed ");Serial.println(motor_speed);
 }
 
 void MOVE_PARTS::transmit(){
   transmit_motor.start(SUB_ID,1);
   utility.num_2_array(send_array,sizeof(send_array),&motor_speed);
   transmit_motor.send(send_array,sizeof(send_array));
+
   // Serial.print("motor_speed ");Serial.println(motor_speed);
   // Serial.print("calc ");
   // for(int i = 0;i<10;i++){
