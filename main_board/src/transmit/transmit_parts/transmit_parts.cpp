@@ -24,6 +24,7 @@ void TRANSMIT_PARTS::send(byte* pt_input_array, int length_of_array){
     // Serial.println("");
     int checksum = 255 - (sum % 256);
     PORT -> write(checksum);
+    delay(2);
 }
 
 
@@ -61,5 +62,7 @@ void TRANSMIT_PARTS::recieve(byte* pt_output_array){
         for(int j = 0; j < i-1; j++){
             pt_output_array[j] = receive_data[j];
         }
+    }else{
+        Serial.print("error ");
     }
 }

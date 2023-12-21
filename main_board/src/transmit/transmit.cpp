@@ -39,7 +39,7 @@ void TRANSMIT::execute(){
         }
     }
     if(PN == 1){
-        for(int sub_ID = 4; sub_ID <= 6;sub_ID++){
+        for(int sub_ID = 1; sub_ID < 2;sub_ID++){
 
             transmit_port1.start(sub_ID,1);
             transmit_port1.send(send_array,sizeof(send_array));
@@ -47,19 +47,19 @@ void TRANSMIT::execute(){
             transmit_port1.start(sub_ID,2);
             transmit_port1.recieve(recieve_array);
 
-            if(sub_ID ==5){
+            if(sub_ID ==1){
                 utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
                 // Serial.println(x);
             }
-            if(sub_ID ==6){
+            if(sub_ID ==2){
                 utility.array_2_num(recieve_array, sizeof(recieve_array),&y);
                 // Serial.println(x);
             }
 
-            for(int j = 0; j < sizeof(recieve_array); j++){
-                // Serial.print(recieve_array[j]);Serial.print(",");
-                recieve_array[j]=0;
-            }
+            // for(int j = 0; j < sizeof(recieve_array); j++){
+            //     // Serial.print(recieve_array[j]);Serial.print(",");
+            //     recieve_array[j]=0;
+            // }
 
         }
 
