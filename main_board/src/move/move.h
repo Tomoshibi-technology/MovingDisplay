@@ -4,10 +4,11 @@
 
 class MOVE{
     private:
-        MOVE_PARTS motor_A = MOVE_PARTS(1, 45);//(ID,MOTOR_DEGREE,Serial)
-        MOVE_PARTS motor_B = MOVE_PARTS(2, 135);
-        MOVE_PARTS motor_C = MOVE_PARTS(3, -135);
-        MOVE_PARTS motor_D = MOVE_PARTS(4, -45);
+        Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28, &Wire);
+        MOVE_PARTS motor_A = MOVE_PARTS(1, 45, &bno);//(ID,MOTOR_DEGREE,Serial)
+        MOVE_PARTS motor_B = MOVE_PARTS(2, 135, &bno);
+        MOVE_PARTS motor_C = MOVE_PARTS(3, -135, &bno);
+        MOVE_PARTS motor_D = MOVE_PARTS(4, -45, &bno);
 
     public:
         MOVE();

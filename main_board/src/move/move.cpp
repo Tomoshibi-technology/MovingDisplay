@@ -4,6 +4,7 @@ MOVE::MOVE(){}
 
 void MOVE::init(){
     motor_A.init();
+    bno.begin();
 }
 
 void MOVE::execute0(int now_time, int start_time, int end_time, int goal_x_coord, int x_coord, int y_coord){

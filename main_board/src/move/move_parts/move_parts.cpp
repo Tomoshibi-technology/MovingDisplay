@@ -1,16 +1,17 @@
 #include "./move_parts.h"
-MOVE_PARTS::MOVE_PARTS(int sub_ID, int motor_degree){
+MOVE_PARTS::MOVE_PARTS(int sub_ID, int motor_degree, Adafruit_BNO055* pt_b){
   SUB_ID = sub_ID;
   MOTER_DEGREE = motor_degree;
+  // TR = pt_tr;
+  B = pt_b;
 }
 
 void MOVE_PARTS::init(){
     port2.begin(115200);
-    bno.begin();
 }
 
 void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y_coord){
-  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  imu::Vector<3> euler = B->getVector(Adafruit_BNO055::VECTOR_EULER);
   int gyro_degree = euler.x();
   float roll = 0;
 
