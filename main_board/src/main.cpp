@@ -29,7 +29,7 @@ void loop() {
   Serial.println(x_coord);
   
   led.execute1(now_time,0,1000,x_coord);
-  // move.execute0(now_time,0,20,-500,x_coord,0);
+  move.execute0(now_time,0,10,-500,x_coord,0);
 }
 
 //----------------------------------------
