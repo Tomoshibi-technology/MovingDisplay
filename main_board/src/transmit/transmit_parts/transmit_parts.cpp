@@ -73,17 +73,17 @@ void TRANSMIT_PARTS::recieve(byte* pt_output_array, int id){
     }
 
     if(255 - (sum%256) == receive_data[i-1]){
-        Serial.print("right ");
+        // Serial.print("right ");
         for(int j = 0; j < i-1; j++){
             pt_output_array[j] = receive_data[j];
-            Serial.print(receive_data[j]);
-            Serial.print(" ");
+            // Serial.print(receive_data[j]);
+            // Serial.print(" ");
         }
     }else{
-        Serial.print("error ");
-        for(int j = 0; j < i-1; j++){
-            Serial.print(receive_data[j]);
-            Serial.print(" ");
-        }
+        // Serial.print("error ");
+        // for(int j = 0; j < i-1; j++){
+        //     Serial.print(receive_data[j]);
+        //     Serial.print(" ");
+        // }
     }
 }
