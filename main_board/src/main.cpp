@@ -26,7 +26,7 @@ void loop() {
   transmit1.execute();
   int x_coord = -transmit1.x;
   x_coord = int(x_coord*0.00445);
-  Serial.print("x_coord ");
+  Serial.print(" :x_coord ");
   Serial.println(x_coord);
   
   led.execute1(now_time,0,1000,x_coord);

@@ -28,11 +28,14 @@ void TRANSMIT_PARTS::send(byte* pt_input_array, int length_of_array){
 }
 
 
-void TRANSMIT_PARTS::recieve(byte* pt_output_array){
+void TRANSMIT_PARTS::recieve(byte* pt_output_array, int id){
     int n = 0, sum = 0, i = 0;
     byte receive_data[] = {0,0,0,0,0,0,0,0,0,0};
     long mytime = millis();
 
+
+    //ここなおすこと!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /*
     while(n < 2){
         if(PORT->available() > 0){
             int d = PORT->read();
@@ -40,6 +43,17 @@ void TRANSMIT_PARTS::recieve(byte* pt_output_array){
         }
         if(millis()>mytime+2){
             break;
+        }
+    }
+    */
+    //--------------------------------------------------
+
+    while(true){
+        if(PORT->available() > 0){
+            int d = PORT->read();
+            if(d==(id*10)+2){
+                break;
+            }
         }
     }
 
@@ -59,10 +73,17 @@ void TRANSMIT_PARTS::recieve(byte* pt_output_array){
     }
 
     if(255 - (sum%256) == receive_data[i-1]){
+        Serial.print("right ");
         for(int j = 0; j < i-1; j++){
             pt_output_array[j] = receive_data[j];
+            Serial.print(receive_data[j]);
+            Serial.print(" ");
         }
     }else{
         Serial.print("error ");
+        for(int j = 0; j < i-1; j++){
+            Serial.print(receive_data[j]);
+            Serial.print(" ");
+        }
     }
 }

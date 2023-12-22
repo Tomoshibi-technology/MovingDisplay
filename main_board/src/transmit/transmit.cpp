@@ -24,7 +24,7 @@ void TRANSMIT::execute(){
             transmit_port2.send(send_array,sizeof(send_array));
 
             transmit_port2.start(sub_ID,2);
-            transmit_port2.recieve(recieve_array);
+            transmit_port2.recieve(recieve_array, sub_ID);
 
             if(sub_ID ==5){
                 utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
@@ -45,7 +45,7 @@ void TRANSMIT::execute(){
             transmit_port1.send(send_array,sizeof(send_array));
 
             transmit_port1.start(sub_ID,2);
-            transmit_port1.recieve(recieve_array);
+            transmit_port1.recieve(recieve_array,sub_ID);
 
             if(sub_ID ==1){
                 utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
