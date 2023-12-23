@@ -51,8 +51,8 @@ void loop() {
 
     move.execute(now_time,0,100,300,x_coord,y_coord);
     move.stop(now_time,100,150,x_coord,y_coord);
-    // move.execute(now_time,150,200,0,x_coord,y_coord);
-    // move.stop(now_time,250,3000,x_coord,y_coord);
+    move.execute(now_time,150,250,0,x_coord,y_coord);
+    move.stop(now_time,250,300,x_coord,y_coord);
 
   }
 }
