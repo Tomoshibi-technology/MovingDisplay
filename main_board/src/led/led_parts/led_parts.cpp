@@ -65,6 +65,7 @@ void LED_PARTS::set_under(int px, int py, int ur, int ug, int ub){
 
 
 void LED_PARTS::set_circle(int px, int py, int ro, int sx, int sy){
+    sx = -sx;
     int py_plus_out = sqrt(ro*ro-(px-sx)*(px-sx)) + sy;
     int py_minus_out = -sqrt(ro*ro-(px-sx)*(px-sx)) + sy;
     if(py >= py_minus_out && py < py_plus_out){
@@ -74,6 +75,7 @@ void LED_PARTS::set_circle(int px, int py, int ro, int sx, int sy){
 
 
 void LED_PARTS::set_square(int px, int py, int sd1, int sd2, int dg, int sx, int sy){
+    sx = -sx;
     int px_out = (px-sx)*cos(-dg*0.017444)- (py-sy)*sin(-dg*0.017444) + sx;
     int py_out = (py-sy)*cos(-dg*0.017444) + (px-sx)*sin(-dg*0.017444) + sy;
     if((px_out >= sx && px_out <= sx + sd1) && (py_out >= sy && py_out <= sy+sd2)){

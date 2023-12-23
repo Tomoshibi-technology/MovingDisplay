@@ -53,7 +53,7 @@ void LED::execute1(int now_time, int start_time, int end_time, int x_coord){
                 py = ipy;
 
                 led_parts.set_under(px,py,0,3,1);
-                led_parts.set_circle(px,py,18+2*sin(i),48,24);
+                led_parts.set_circle(px,py,18+2*sin(i),150,24);
 
                 led_parts.set_id(ipx,ipy,&panel_A_ID, &panel_B_ID, &panel_C_ID, &panel_N);
                 led_parts.set_color(ipx,ipy, panel_A_ID, panel_B_ID, panel_C_ID, panel_N);

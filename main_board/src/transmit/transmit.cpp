@@ -39,7 +39,7 @@ void TRANSMIT::execute(){
         }
     }
     if(PN == 1){
-        for(int sub_ID = 1; sub_ID < 2;sub_ID++){
+        for(int sub_ID = 1; sub_ID <= 2;sub_ID++){
 
             transmit_port1.start(sub_ID,1);
             transmit_port1.send(send_array,sizeof(send_array));
