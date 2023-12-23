@@ -43,6 +43,8 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
   float rs = sqrt((goal_x_coord - x_coord)*(goal_x_coord - x_coord) + y_coord*y_coord) / time_length;
   int direction = atan2(goal_x_coord-x_coord,-(y_coord*2))/PI*180;
   int robot_speed = int(rs*10);
+  if(goal_x_coord-x_coord==0){robot_speed = 0;}
+  
   Serial.print("dir ");
   Serial.println(direction);
 //   Serial.print("tl ");Serial.println(time_length);

@@ -37,6 +37,7 @@ void loop() {
     x_coord = int(x_coord*0.00445);
     int y_coord = transmit1.y;
     y_coord = int(y_coord*0.00445);
+    Serial.println("");
     Serial.print("time: ");
     Serial.print(now_time);
     Serial.print(" x_coord: ");
