@@ -17,6 +17,6 @@ class MOVE{
     public:
         MOVE();
         void init();
-        void execute0(int now_time, int start_time, int end_time, int goal_x_coord,int x_coord, int y_coord);
+        void execute(int now_time, int start_time, int end_time, int goal_x_coord,int x_coord, int y_coord);
         void stop(int now_time, int start_time, int end_time, int x_coord, int y_coord);
 };

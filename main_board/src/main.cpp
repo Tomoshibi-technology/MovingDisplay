@@ -20,10 +20,17 @@ void setup() {
 }
 
 int now_time = 0;
+int mi_now = 0;
+int sn = 0;
 
 void loop() {
   if(digitalRead(PA7)==1){
-    now_time = (int)millis()/100;
+    if(sn==0){
+      now_time = 0;
+      mi_now = (int)millis()/100;
+      sn= sn+1;
+    }
+    now_time = (int)millis()/100 - mi_now;
 
     transmit1.execute();
     int x_coord = transmit1.x;
@@ -40,10 +47,11 @@ void loop() {
     int led_x_coord = -x_coord;
     
     led.execute1(now_time,0,10000,led_x_coord);
-    move.execute0(now_time,0,100,300,x_coord,y_coord);
+
+    move.execute(now_time,0,100,300,x_coord,y_coord);
     move.stop(now_time,100,150,x_coord,y_coord);
-    move.execute0(now_time,150,250,0,x_coord,y_coord);
-    move.stop(now_time,250,300,x_coord,y_coord);
+    move.execute(now_time,150,250,0,x_coord,y_coord);
+    move.stop(now_time,250,3000,x_coord,y_coord);
 
   }
 }

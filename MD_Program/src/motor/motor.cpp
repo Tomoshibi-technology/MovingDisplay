@@ -26,14 +26,27 @@ void MOTOR::angle_rotate(uint16_t goal_angle){ // 0 - 69(gear_ratio)
 }
 
 void MOTOR::speed_rotate(int16_t goal_speed){ //-50から50 → 100 - 200
-	if(goal_speed<0){goal_speed = goal_speed - 80;}
-	else if(goal_speed > 0){goal_speed = goal_speed + 80;}
+	// if(goal_speed<0){goal_speed = goal_speed - 80;}
+	// else if(goal_speed > 0){goal_speed = goal_speed + 80;}
 	
 	if(goal_speed>=MAX_SPEED){
 		goal_speed = MAX_SPEED;
 	}else if(goal_speed <= -1*MAX_SPEED){
 		goal_speed = -1* MAX_SPEED;
 	}
+
+	if(goal_speed<0){
+		goal_speed = map(goal_speed,-MAX_SPEED,-1,-MAX_SPEED,-77);
+	}else if(goal_speed > 0){
+		goal_speed = map(goal_speed,1,MAX_SPEED,77,MAX_SPEED);
+	}
+
+	if(goal_speed>=MAX_SPEED){
+		goal_speed = MAX_SPEED;
+	}else if(goal_speed <= -1*MAX_SPEED){
+		goal_speed = -1* MAX_SPEED;
+	}
+
 	rotate(goal_speed);
 }
 
