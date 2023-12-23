@@ -13,7 +13,7 @@ class MOTOR{
 
 		uint16_t FREQUENCY = 20000;
 
-		uint16_t MAX_SPEED = 220;
+		uint16_t MAX_SPEED = 240;
 		uint16_t MIN_SPEED = 0;
 
 		int32_t now_motor_rev = 0; //現在の回転数(モーター角度)

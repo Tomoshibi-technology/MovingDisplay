@@ -36,9 +36,9 @@ void MOTOR::speed_rotate(int16_t goal_speed){ //-50から50 → 100 - 200
 	}
 
 	if(goal_speed<0){
-		goal_speed = map(goal_speed,-MAX_SPEED,-1,-MAX_SPEED,-77);
+		goal_speed = map(goal_speed,-MAX_SPEED,-1,-MAX_SPEED,-76);
 	}else if(goal_speed > 0){
-		goal_speed = map(goal_speed,1,MAX_SPEED,77,MAX_SPEED);
+		goal_speed = map(goal_speed,1,MAX_SPEED,76,MAX_SPEED);
 	}
 
 	if(goal_speed>=MAX_SPEED){
@@ -86,15 +86,15 @@ void MOTOR::rotate(int16_t duty){ //-255 - 255
 	}
 	if(duty>pre_duty +1){
 		duty = pre_duty + 1;
-		Serial.print("aaaaaaaaaaaaa");
+		// Serial.print("aaaaaaaaaaaaa");
 	}else if(duty<pre_duty-1){
-		Serial.print("aaaaaaaaaaaaa");
+		// Serial.print("aaaaaaaaaaaaa");
 		duty = pre_duty - 1;
 	}
 	Serial.print("duty ");
 	Serial.println(duty);
-	Serial.print("pre_duty ");
-	Serial.println(pre_duty);
+	// Serial.print("pre_duty ");
+	// Serial.println(pre_duty);
 
 	pre_duty = duty;
 	if(duty > 0){

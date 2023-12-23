@@ -50,7 +50,10 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
 //   Serial.print("dir ");Serial.println(direction);
   motor_speed = int(robot_speed*sin((PI/180)*(direction - MOTER_DEGREE)));
   motor_speed = int((motor_speed * motor_rate) + (roll * (1 - motor_rate)));
-  motor_speed = int(motor_speed*1.5);
+  motor_speed = int(motor_speed*1.8);
+  Serial.print("ms ");
+  Serial.print(motor_speed);
+
 }
 
 void MOVE_PARTS::transmit(){

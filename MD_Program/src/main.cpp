@@ -62,13 +62,25 @@ void loop() {
     transmit_port1.recieve_send(recieve_array, send_array, my_ID, sizeof(send_array));
 
 	array_2_num(recieve_array, sizeof(recieve_array), &receive_speed);
-	// Serial.println(receive_speed);
+	Serial.print("transmit_detect ");
+	for(int k = 0; k<10; k++){
+		Serial.print(recieve_array[k]);
+		Serial.print(" ");
+	}
+	Serial.println("");
   }
+
+	if(receive_speed<-200000 || receive_speed>200000){
+		receive_speed = 0;
+	}
 	// ここまで通信
 
 	// ここから回転
 	// 50-100 逆転
 	// 100-150 正転
+	Serial.print("rc_sp ");
+	Serial.println(receive_speed);
+	
 	motor.speed_rotate(receive_speed);
 	
 	// motor.speed_rotate(20*sin(n));
