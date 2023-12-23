@@ -43,23 +43,29 @@ void loop() {
     int y_coord = transmit1.y;
     y_coord = int(y_coord*0.00445);
 
-    // Serial.println("");
-    // Serial.print("time: ");
-    // Serial.print(now_time);
-    // Serial.print(" x_coord: ");
-    // Serial.print(x_coord);
-    // Serial.print(" y_coord: ");
-    // Serial.println(y_coord);
-
     int led_x_coord = -x_coord;
     
-    led.execute1(now_time,0,10000,led_x_coord);
+    led.execute0(now_time,0,100,led_x_coord);
+    led.execute1(now_time,100,270,led_x_coord);
+    led.execute3(now_time,270,500,led_x_coord);
 
-    move.execute(now_time,0,100,300,x_coord,y_coord);
-    move.stop(now_time,100,150,x_coord,y_coord);
-    move.execute(now_time,150,250,0,x_coord,y_coord);
-    // move.stop(now_time,250,300,x_coord,y_coord);
-    move.fullstop(now_time,250,300);
+    // move.execute(now_time,0,100,150,x_coord,y_coord);
+    // move.stop(now_time,100,110,x_coord,y_coord);
+    // move.execute(now_time,110,160,200,x_coord,y_coord);
+    // move.stop(now_time,160,170,x_coord,y_coord);
+    // move.execute(now_time,170,200,100,x_coord,y_coord);
+    // move.stop(now_time,200,210,x_coord,y_coord);
+    // move.execute(now_time,210,240,200,x_coord,y_coord);
+    // move.stop(now_time,240,250,x_coord,y_coord);
+    // move.execute(now_time,250,260,150,x_coord,y_coord);
+    // move.stop(now_time,260,270,x_coord,y_coord);
+
+    // move.execute(now_time,270,300,250,x_coord,y_coord);
+    // move.stop(now_time,300,310,x_coord,y_coord);
+    // move.execute(now_time,310,360,50,x_coord,y_coord);
+    // move.stop(now_time,360,370,x_coord,y_coord);
+
+    move.fullstop(now_time,370,400);
   }
 }
 
@@ -84,3 +90,11 @@ void read_TWE(byte* pt_input_array, int array_num){
     }
   }
 }
+
+    // Serial.println("");
+    // Serial.print("time: ");
+    // Serial.print(now_time);
+    // Serial.print(" x_coord: ");
+    // Serial.print(x_coord);
+    // Serial.print(" y_coord: ");
+    // Serial.println(y_coord);
