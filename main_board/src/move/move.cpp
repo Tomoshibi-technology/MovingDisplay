@@ -15,6 +15,7 @@ void MOVE::execute(int now_time, int start_time, int end_time, int goal_x_coord,
         motor_B.calculate(end_time-now_time, goal_x_coord, x_coord, y_coord);
         motor_C.calculate(end_time-now_time, goal_x_coord, x_coord, y_coord);
         motor_D.calculate(end_time-now_time,goal_x_coord, x_coord, y_coord);
+        Serial.println("");
         motor_A.transmit();
         motor_B.transmit();
         motor_C.transmit();
@@ -28,6 +29,21 @@ void MOVE::stop(int now_time, int start_time, int end_time, int x_coord, int y_c
         motor_B.calculate(end_time-now_time, x_coord, x_coord, y_coord);
         motor_C.calculate(end_time-now_time, x_coord, x_coord, y_coord);
         motor_D.calculate(end_time-now_time,x_coord, x_coord, y_coord);
+        Serial.println("");
+        motor_A.transmit();
+        motor_B.transmit();
+        motor_C.transmit();
+        motor_D.transmit();
+    }
+}
+
+void MOVE::fullstop(int now_time, int start_time, int end_time){
+    if(now_time >= start_time && now_time < end_time){
+        motor_A.calcstop();
+        motor_B.calcstop();
+        motor_C.calcstop();
+        motor_D.calcstop();
+        Serial.println("");
         motor_A.transmit();
         motor_B.transmit();
         motor_C.transmit();

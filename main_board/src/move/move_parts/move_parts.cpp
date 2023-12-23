@@ -22,7 +22,7 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
 
   if (gyro_degree > 0){
     roll = -10 + (-gyro_degree * 2);
-    if (gyro_degree < 3){
+    if (gyro_degree < 6){
       roll = 0;
     }
     if (roll < -150){
@@ -30,7 +30,7 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
     }
   }else if (gyro_degree < 0){
     roll = 10 + (-gyro_degree * 2);
-    if (gyro_degree > -3){
+    if (gyro_degree > -6){
       roll = 0;
     }
     if (roll > 150){
@@ -44,7 +44,7 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
   int direction = atan2(goal_x_coord-x_coord,-(y_coord*2))/PI*180;
   int robot_speed = int(rs*10);
   if(goal_x_coord-x_coord==0){robot_speed = 0;}
-  
+
   Serial.print("dir ");
   Serial.println(direction);
 //   Serial.print("tl ");Serial.println(time_length);
@@ -53,7 +53,8 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
   motor_speed = int(robot_speed*sin((PI/180)*(direction - MOTER_DEGREE)));
   motor_speed = int((motor_speed * motor_rate) + (roll * (1 - motor_rate)));
   motor_speed = int(motor_speed*1.8);
-  Serial.print("ms ");
+  Serial.print(SUB_ID);
+  Serial.print(" ms ");
   Serial.print(motor_speed);
 
 }
@@ -62,13 +63,8 @@ void MOVE_PARTS::transmit(){
   TR->start(SUB_ID,1);
   utility.num_2_array(send_array,sizeof(send_array),&motor_speed);
   TR->send(send_array,sizeof(send_array));
+}
 
-  // Serial.print("motor_speed ");Serial.println(motor_speed);
-  // Serial.print("calc ");
-  // for(int i = 0;i<10;i++){
-  //   Serial.print(send_array[i]);
-  //   Serial.print(" ");
-  // }
-  // Serial.println("");
-
+void MOVE_PARTS::calcstop(){
+  motor_speed = 0;
 }

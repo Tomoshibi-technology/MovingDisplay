@@ -25,4 +25,5 @@ class MOVE_PARTS{
         void init();
         void calculate(int time_length, int goal_x_coord, int x_coord, int y_coord);
         void transmit();
+        void calcstop();
 };

@@ -24,7 +24,7 @@ void TRANSMIT_PARTS::send(byte* pt_input_array, int length_of_array){
     // Serial.println("");
     int checksum = 255 - (sum % 256);
     PORT -> write(checksum);
-    delay(2);
+    // delay(1);
 }
 
 
@@ -66,7 +66,7 @@ void TRANSMIT_PARTS::recieve(byte* pt_output_array, int id){
             sum = sum + receive_data[i];
             i++;
         }
-        if(millis()>mytime+2){
+        if(millis()>mytime+1){
             sum = sum - receive_data[i-1];
             break;
         }
