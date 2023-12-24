@@ -23,7 +23,7 @@ class TRANSMIT{
 
     public:
         TRANSMIT(int port_num);
-        void execute();
+        void execute(long send_num);
         void init();
         void test();
         long x = 0;

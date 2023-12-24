@@ -9,6 +9,9 @@ TRANSMIT_PARTS::TRANSMIT_PARTS(HardwareSerial* pt_port){
 void TRANSMIT_PARTS::start(int id, int send_or_receive){
     PORT -> write(250);
     PORT -> write(id*10 + send_or_receive);
+    // Serial.print("id");
+    // Serial.print(id);
+    // Serial.print(" ");
 }
 
 

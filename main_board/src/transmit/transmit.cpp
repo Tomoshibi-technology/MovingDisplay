@@ -15,37 +15,40 @@ void TRANSMIT::init(){
     digitalWrite(PA4,1);
 }
 
-void TRANSMIT::execute(){
+void TRANSMIT::execute(long send_num){
 
-    if(PN == 2){
-        for(int sub_ID = 1; sub_ID <= 4;sub_ID++){
+    // if(PN == 2){
+    //     for(int sub_ID = 1; sub_ID <= 4;sub_ID++){
 
-            transmit_port2.start(sub_ID,1);
-            transmit_port2.send(send_array,sizeof(send_array));
+    //         transmit_port2.start(sub_ID,1);
+    //         transmit_port2.send(send_array,sizeof(send_array));
 
-            transmit_port2.start(sub_ID,2);
-            transmit_port2.recieve(recieve_array, sub_ID);
+    //         transmit_port2.start(sub_ID,2);
+    //         transmit_port2.recieve(recieve_array, sub_ID);
 
-            if(sub_ID ==5){
-                utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
-            }
+    //         if(sub_ID ==5){
+    //             utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
+    //         }
 
-            for(int j = 0; j < sizeof(recieve_array); j++){
-                // Serial.print(recieve_array[j]);Serial.print(",");
-                recieve_array[j]=0;
-            }
-            //delay(20);
-            // Serial.println("");
-        }
-    }
+    //         for(int j = 0; j < sizeof(recieve_array); j++){
+    //             // Serial.print(recieve_array[j]);Serial.print(",");
+    //             recieve_array[j]=0;
+    //         }
+    //         //delay(20);
+    //         // Serial.println("");
+    //     }
+    // }
     if(PN == 1){
         for(int sub_ID = 1; sub_ID <= 2;sub_ID++){
+            utility.num_2_array(send_array,sizeof(send_array),&send_num);
 
             transmit_port1.start(sub_ID,1);
             transmit_port1.send(send_array,sizeof(send_array));
 
-            transmit_port1.start(sub_ID,2);
-            transmit_port1.recieve(recieve_array,sub_ID);
+            if(sub_ID!=3){
+                transmit_port1.start(sub_ID,2);
+                transmit_port1.recieve(recieve_array,sub_ID);
+            }
 
             if(sub_ID ==1){
                 utility.array_2_num(recieve_array, sizeof(recieve_array),&x);
