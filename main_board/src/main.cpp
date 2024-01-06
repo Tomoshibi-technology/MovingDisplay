@@ -68,7 +68,7 @@ void loop() {
 
   // time = 0;
 
-  move.execute(now_time,0,80,350,x_coord,y_coord);
+  move.execute(now_time,0,80,-350,x_coord,y_coord);
   move.stop(now_time,80,90,x_coord,y_coord);
   move.execute(now_time,90,170,0,x_coord,y_coord);
   move.stop(now_time,170,180,x_coord,y_coord);
