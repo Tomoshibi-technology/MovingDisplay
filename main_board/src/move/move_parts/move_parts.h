@@ -20,6 +20,7 @@ class MOVE_PARTS{
         Adafruit_BNO055* B;
         UTILITY utility = UTILITY();
         byte send_array[10] = {0,0,0,0,0,0,0,0,0,0};
+
     public:
         MOVE_PARTS(int sub_ID, int motor_degree, TRANSMIT_PARTS* pt_trAdafruit_BNO055, Adafruit_BNO055* pt_b);
         void init();

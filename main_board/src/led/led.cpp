@@ -30,6 +30,21 @@ void LED::execute3(int now_time, int start_time, int end_time, int x_coord){
     }
 }
 
+void LED::off(){
+    for (int ipy = 0; ipy < panel_ver; ipy++){
+        for (int ipx = 0; ipx < panel_hor; ipx++){
+            
+
+            led_parts.set_under(px,py,0,0,0);
+
+        
+            led_parts.set_id(ipx,ipy,&panel_A_ID, &panel_B_ID, &panel_C_ID, &panel_N);
+            led_parts.set_color(ipx,ipy, panel_A_ID, panel_B_ID, panel_C_ID, panel_N);
+        }
+    }
+    led_parts.show();
+}
+
 void LED::execute2(int now_time, int start_time, int end_time, int x_coord){
     if(now_time >= start_time && now_time < end_time){
         for (int ipy = 0; ipy < panel_ver; ipy++){

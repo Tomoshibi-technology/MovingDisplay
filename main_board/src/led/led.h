@@ -17,6 +17,7 @@ class LED{
     public:
         LED();
         void init();
+        void off();
         void execute3(int now_time, int start_time, int end_time, int x_coord);
         void execute2(int now_time, int start_time, int end_time, int x_coord);
         void execute1(int now_time, int start_time, int end_time, int x_coord);
