@@ -36,9 +36,9 @@ void MOTOR::speed_rotate(int16_t goal_speed){ //-50から50 → 100 - 200
 	}
 
 	if(goal_speed<0){
-		goal_speed = map(goal_speed,-MAX_SPEED,-1,-MAX_SPEED,-94);
+		goal_speed = map(goal_speed,-MAX_SPEED,-1,-MAX_SPEED,-100);
 	}else if(goal_speed > 0){
-		goal_speed = map(goal_speed,1,MAX_SPEED,94,MAX_SPEED);
+		goal_speed = map(goal_speed,1,MAX_SPEED,100,MAX_SPEED);
 	}
 
 	if(goal_speed>=MAX_SPEED){

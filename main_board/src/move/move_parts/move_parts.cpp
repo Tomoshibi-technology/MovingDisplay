@@ -53,6 +53,7 @@ void MOVE_PARTS::calculate(int time_length, int goal_x_coord, int x_coord, int y
   motor_speed = int(robot_speed*sin((PI/180)*(direction - MOTER_DEGREE)));
   motor_speed = int((motor_speed * motor_rate) + (roll * (1 - motor_rate)));
   motor_speed = int(motor_speed*1.8);
+  // motor_speed = 30;
   Serial.print(SUB_ID);
   Serial.print(" ms ");
   Serial.print(motor_speed);
