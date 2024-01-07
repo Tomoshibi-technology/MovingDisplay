@@ -11,22 +11,23 @@ HardwareSerial TWE = HardwareSerial(PC7,PC6);
 MOVE move = MOVE();
 LED led = LED();
 
-void read_TWE(byte* pt_twe_array, int array_num, int*st, int*nt);
+void read_TWE(byte* pt_twe_array, int array_num, int*md);
+bool read(void);
 byte TWE_array[4]={0,0,0,0};
 
-int start_detect = 0;
-int nstart_detect = 0;
 int now_time = 0;
 int mi_now = 0;
-int sn = 0;
-int sn2 = 0;
+int pre_time = 0;
+
 int x_coord = 0;
 int y_coord = 0;
 
-int error1 = 0, error2 = 0;
+int mode = 0;
+int pre_mode = 0;
+int n1 = 0, n2 = 0;
 
-int time = 0;
-int pre_time = 0;
+int mytime = 0;
+
 
 void setup() {
   Serial.begin(115200);
@@ -39,14 +40,10 @@ void setup() {
 }
 
 void loop() {
-  read_TWE(TWE_array,sizeof(TWE_array),&error1,&error2);
-  // now_time = (TWE_array[0]-5)+((TWE_array[1]-5)*250);
-  // if(now_time>pre_time + 1000 or error1 == 1 or error2 == 1){
-  //   now_time = pre_time;
+  // if(read()){
+    // Serial.println("");Serial.print("------------------mode ");Serial.println(mode);
+  read();
   // }
-  // pre_time = now_time;
-  
-  now_time = (int)millis()/100 - mi_now;
 
   transmit1.execute(x_coord);
 
@@ -55,136 +52,112 @@ void loop() {
   y_coord = transmit1.y;
   y_coord = int(y_coord*0.00445);
 
-  Serial.print("time ");
-  Serial.print(now_time);
-  Serial.print(" x_coord: ");
-  Serial.print(x_coord);
-  Serial.print(" y_coord: ");
-  Serial.println(y_coord);
+  if(millis()>5000+mytime){
+    y_coord = y_coord + 1;
+  }
+
+  // Serial.println("");
+  // Serial.print("time ");
+  // Serial.print(now_time);
+  // Serial.print(" x_coord: ");
+  // Serial.print(x_coord);
+  // Serial.print(" y_coord: ");
+  // Serial.println(y_coord);
 
   int led_x_coord = -x_coord;
 
-  led.execute1(now_time,0,500,led_x_coord);
+  if(mode==2){
 
-  // time = 0;
+    if(pre_mode == 1 and mode == 2){
+      mi_now = (int)millis()/100;
+      // Serial.println("reset!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+    now_time = (int)millis()/100 - mi_now;
+    led.execute2(now_time,0,50,led_x_coord);
+    led.execute0(now_time,50,110,led_x_coord);
+    led.execute1(now_time,110,270,led_x_coord);
 
-  move.execute(now_time,0,80,-350,x_coord,y_coord);
-  move.stop(now_time,80,90,x_coord,y_coord);
-  move.execute(now_time,90,170,0,x_coord,y_coord);
-  move.stop(now_time,170,180,x_coord,y_coord);
+    move.stop(now_time,0,50,x_coord,y_coord);
+    move.execute(now_time,50,110,-300,x_coord,y_coord);
+    move.stop(now_time,110,120,x_coord,y_coord);
+    move.execute(now_time,120,150,-150,x_coord,y_coord);
+    move.stop(now_time,150,160,x_coord,y_coord);
+    move.execute(now_time,160,190,-300,x_coord,y_coord);
+    move.stop(now_time,190,200,x_coord,y_coord);
+    move.execute(now_time,200,230,-150,x_coord,y_coord);
+    move.stop(now_time,230,270,x_coord,y_coord);
 
-  // if(start_detect>=10){
-  //   if(sn==0){
-  //     now_time = 0;
-  //     mi_now = (int)millis()/100;
-  //     sn= sn+1;
-  //   }
-  //   now_time = (int)millis()/100 - mi_now;
+  }else if(mode==4){
 
-  //   transmit1.execute(x_coord);
+    if(pre_mode == 3 and mode==4){
+      mi_now = (int)millis()/100;
+      // Serial.println("reset!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+    now_time = (int)millis()/100 - mi_now;
+    led.execute1(now_time,0,270,led_x_coord);
 
-  //   x_coord = transmit1.x;
-  //   x_coord = int(x_coord*0.00445);
-  //   y_coord = transmit1.y;
-  //   y_coord = int(y_coord*0.00445);
+    move.stop(now_time,0,50,x_coord,y_coord);
+    move.execute(now_time,50,110,-300,x_coord,y_coord);
+    move.stop(now_time,110,120,x_coord,y_coord);
+    move.execute(now_time,120,150,-150,x_coord,y_coord);
+    move.stop(now_time,150,160,x_coord,y_coord);
+    move.execute(now_time,160,190,-300,x_coord,y_coord);
+    move.stop(now_time,190,200,x_coord,y_coord);
+    move.execute(now_time,200,230,-150,x_coord,y_coord);
+    move.stop(now_time,230,270,x_coord,y_coord);
 
-  //   int led_x_coord = -x_coord;
+  }else if(mode==5){
 
-  //   // Serial.println("");
-  //   // Serial.print("time: ");
-  //   // Serial.print(now_time);
-  //   // Serial.print(" x_coord: ");
-  //   // Serial.print(x_coord);
-  //   // Serial.print(" y_coord: ");
-  //   // Serial.println(y_coord);
-    
-  //   led.execute2(now_time,0,50,led_x_coord);
-  //   led.execute0(now_time,50,150,led_x_coord);
-  //   led.execute1(now_time,150,390,led_x_coord);
-  //   if(nstart_detect<7){led.execute3(now_time,390,550,led_x_coord);}
+    if(pre_mode == 4 and mode==5){
+      mi_now = (int)millis()/100;
+      // Serial.println("reset!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+    now_time = (int)millis()/100 - mi_now;
+    led.execute1(now_time,0,270,led_x_coord);
 
-  //   move.stop(now_time,0,50,x_coord,y_coord);
+    move.stop(now_time,0,50,x_coord,y_coord);
+    move.execute(now_time,50,110,-300,x_coord,y_coord);
+    move.stop(now_time,110,120,x_coord,y_coord);
+    move.execute(now_time,120,150,-150,x_coord,y_coord);
+    move.stop(now_time,150,160,x_coord,y_coord);
+    move.execute(now_time,160,190,-300,x_coord,y_coord);
+    move.stop(now_time,190,200,x_coord,y_coord);
+    move.execute(now_time,200,230,-150,x_coord,y_coord);
+    move.stop(now_time,230,270,x_coord,y_coord);
 
-  //   move.execute(now_time,50,150,-250,x_coord,y_coord);
-  //   move.stop(now_time,150,160,x_coord,y_coord);
+  }else{
+    // mi_now = (int)millis()/100;
+    move.stop(now_time,-9000000,9000000,x_coord,y_coord);
+  }
 
-  //   move.execute(now_time,160,180,-350,x_coord,y_coord);
-  //   move.stop(now_time,180,190,x_coord,y_coord);
-  //   move.execute(now_time,190,230,-150,x_coord,y_coord);
-  //   move.stop(now_time,230,240,x_coord,y_coord);
-  //   move.execute(now_time,240,280,-350,x_coord,y_coord);
-  //   move.stop(now_time,280,290,x_coord,y_coord);
-  //   move.execute(now_time,290,330,-150,x_coord,y_coord);
-  //   move.stop(now_time,330,340,x_coord,y_coord);
-  //   move.execute(now_time,340,380,-350,x_coord,y_coord);
-  //   move.stop(now_time,380,390,x_coord,y_coord);
-
-  //   move.execute(now_time,390,510,-50,x_coord,y_coord);
-  //   move.stop(now_time,510,520,x_coord,y_coord);
-
-  //   move.fullstop(now_time,520,550);
-  // }
-  // if(nstart_detect>=10){
-  //   if(sn2==0){
-  //     now_time = 0;
-  //     mi_now = (int)millis()/100;
-  //     sn2= sn2+1;
-  //   }
-  //   now_time = (int)millis()/100 - mi_now;
-
-  //   transmit1.execute(x_coord);
-
-  //   x_coord = transmit1.x;
-  //   x_coord = int(x_coord*0.00445);
-  //   y_coord = transmit1.y;
-  //   y_coord = int(y_coord*0.00445);
-
-  //   int led_x_coord = -x_coord;
-
-  //   led.execute1(now_time,0,1000,led_x_coord);
-
-  //   move.execute(now_time,0,100,-350,x_coord,y_coord);
-  //   move.stop(now_time,100,110,x_coord,y_coord);
-  //   move.execute(now_time,110,220,-150,x_coord,y_coord);
-  //   move.stop(now_time,220,230,x_coord,y_coord);
-  //   move.execute(now_time,230,300,-350,x_coord,y_coord);
-  //   move.stop(now_time,300,310,x_coord,y_coord);
-  //   move.execute(now_time,310,390,-150,x_coord,y_coord);
-  //   move.stop(now_time,390,400,x_coord,y_coord);
-  //   move.fullstop(now_time,400,450);
-  // }
+  pre_mode = mode;
 }
 
 //----------------------------------------
 
-void read_TWE(byte* pt_input_array, int array_num, int* st, int* nt){
-  while(true){
-    if(TWE.available()>0){
-      int data = TWE.read();
-      if(data==250){break;}
-    }
-  }
-  int TWEtime = millis();
-  int k = 0;
-  while(k<array_num){
-    if(TWE.available()>0){
-      pt_input_array[k]=TWE.read();
-      if(pt_input_array[0]==0){*st = 1;}
-      else{*st = 0;}
-      if(pt_input_array[1]==0){*nt = 1;}
-      else{*nt = 0;}
-      k++;
-    }
-    if(millis()>TWEtime+1){
-      break;
-    }
-  }
-}
 
-    // Serial.println("");
-    // Serial.print("time: ");
-    // Serial.print(now_time);
-    // Serial.print(" x_coord: ");
-    // Serial.print(x_coord);
-    // Serial.print(" y_coord: ");
-    // Serial.println(y_coord);
+bool read(void){ //受信成功したら1を返す
+	if(TWE.available()>10){
+		byte data = TWE.read();
+		if(data == 250){
+			byte raw_receive_data[4] = {0, 0, 0, 0};
+			bool receive_bad_flg = 0; //受信失敗フラグ
+			for(int i=0; i<4; i++){
+				if(TWE.available()>0){
+					raw_receive_data[i] = TWE.read();
+					if(raw_receive_data[i] == 250){receive_bad_flg = 1; break;} //受信失敗フラグを立てる(250が来たら
+				}else{
+					receive_bad_flg = 1; break;
+				}
+			}
+			if(!receive_bad_flg){
+				for(int i=0; i<4; i++){
+					TWE_array[i] = raw_receive_data[i];
+          if(i==3){mode = TWE_array[i]-5;}
+				}
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
