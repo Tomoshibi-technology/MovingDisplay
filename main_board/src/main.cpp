@@ -35,7 +35,10 @@ void setup() {
   led.init();
   move.init();
   transmit1.init();
+
   pinMode(PA7,INPUT);
+  pinMode(PA6,INPUT);
+
   mi_now = (int)millis()/100;
 }
 
@@ -52,10 +55,6 @@ void loop() {
   y_coord = transmit1.y;
   y_coord = int(y_coord*0.00445);
 
-  if(millis()>5000+mytime){
-    y_coord = y_coord + 1;
-  }
-
   // Serial.println("");
   // Serial.print("time ");
   // Serial.print(now_time);
@@ -66,6 +65,26 @@ void loop() {
 
   int led_x_coord = -x_coord;
 
+  /*
+  if(digitalRead(PA7)==1){
+    led.execute1(now_time,0,270,led_x_coord);
+  }
+  else if(digitalRead(PA6)==1){
+    if(n1==0){
+      mi_now = (int)millis()/100;
+      n1 = n1 + 1;
+    }
+    now_time = (int)millis()/100 - mi_now;
+    led.execute1(now_time,0,300,led_x_coord);
+
+    move.execute(now_time,0,40,-150,x_coord,y_coord);
+    move.stop(now_time,40,50,x_coord,y_coord);
+    move.execute(now_time,50,130,150,x_coord,y_coord);
+    move.stop(now_time,130,140,x_coord,y_coord);
+  }
+  */
+
+  
   if(mode==2){
 
     if(pre_mode == 1 and mode == 2){
@@ -94,17 +113,21 @@ void loop() {
       // Serial.println("reset!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
     now_time = (int)millis()/100 - mi_now;
-    led.execute1(now_time,0,270,led_x_coord);
+    led.execute1(now_time,0,220,led_x_coord);
+    led.execute3(now_time,220,450,led_x_coord);
 
-    move.stop(now_time,0,50,x_coord,y_coord);
-    move.execute(now_time,50,110,-300,x_coord,y_coord);
-    move.stop(now_time,110,120,x_coord,y_coord);
-    move.execute(now_time,120,150,-150,x_coord,y_coord);
-    move.stop(now_time,150,160,x_coord,y_coord);
-    move.execute(now_time,160,190,-300,x_coord,y_coord);
-    move.stop(now_time,190,200,x_coord,y_coord);
-    move.execute(now_time,200,230,-150,x_coord,y_coord);
-    move.stop(now_time,230,270,x_coord,y_coord);
+    move.execute(now_time,0,70,-300,x_coord,y_coord);
+    move.stop(now_time,70,80,x_coord,y_coord);
+    move.execute(now_time,120,160,-100,x_coord,y_coord);
+    move.stop(now_time,160,170,x_coord,y_coord);
+    move.execute(now_time,170,210,-300,x_coord,y_coord);
+    move.stop(now_time,210,220,x_coord,y_coord);
+    move.execute(now_time,220,270,-100,x_coord,y_coord);
+    move.stop(now_time,270,280,x_coord,y_coord);
+    move.execute(now_time,280,350,-300,x_coord,y_coord);
+    move.stop(now_time,350,360,x_coord,y_coord);
+    move.execute(now_time,360,400,-200,x_coord,y_coord);
+    move.stop(now_time,400,450,x_coord,y_coord);
 
   }else if(mode==5){
 
@@ -113,24 +136,35 @@ void loop() {
       // Serial.println("reset!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
     now_time = (int)millis()/100 - mi_now;
-    led.execute1(now_time,0,270,led_x_coord);
+    led.execute3(now_time,0,220,led_x_coord);
+    led.execute1(now_time,220,900,led_x_coord);
 
-    move.stop(now_time,0,50,x_coord,y_coord);
-    move.execute(now_time,50,110,-300,x_coord,y_coord);
-    move.stop(now_time,110,120,x_coord,y_coord);
-    move.execute(now_time,120,150,-150,x_coord,y_coord);
-    move.stop(now_time,150,160,x_coord,y_coord);
-    move.execute(now_time,160,190,-300,x_coord,y_coord);
-    move.stop(now_time,190,200,x_coord,y_coord);
-    move.execute(now_time,200,230,-150,x_coord,y_coord);
-    move.stop(now_time,230,270,x_coord,y_coord);
+    move.execute(now_time,0,70,-300,x_coord,y_coord);
+    move.stop(now_time,70,80,x_coord,y_coord);
+    move.execute(now_time,120,160,-100,x_coord,y_coord);
+    move.stop(now_time,160,170,x_coord,y_coord);
+    move.execute(now_time,170,210,-300,x_coord,y_coord);
+    move.stop(now_time,210,220,x_coord,y_coord);
+    move.execute(now_time,220,270,-100,x_coord,y_coord);
+    move.stop(now_time,270,280,x_coord,y_coord);
+    move.execute(now_time,280,350,-300,x_coord,y_coord);
+    move.stop(now_time,350,360,x_coord,y_coord);
+    move.execute(now_time,360,420,-100,x_coord,y_coord);
+    move.stop(now_time,420,430,x_coord,y_coord);
+    move.execute(now_time,430,470,-200,x_coord,y_coord);
+    move.stop(now_time,470,570,x_coord,y_coord);
 
+  }else if(mode==6){
+    led.off();
+    move.fullstop(now_time,-9000000,9000000);
   }else{
     // mi_now = (int)millis()/100;
     move.stop(now_time,-9000000,9000000,x_coord,y_coord);
+    move.fullstop(now_time,-9000000,9000000);
   }
 
   pre_mode = mode;
+  
 }
 
 //----------------------------------------
