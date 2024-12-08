@@ -34,7 +34,7 @@ class PERFORMANCE{
 	uint8_t circle_H_standard = 0;
 	uint8_t S_standard = 251;
 	uint8_t V_safety = 50;
-	uint8_t V_standard = 1;
+	uint8_t V_standard = 10;
 	uint8_t V_hard = 150;
 
 

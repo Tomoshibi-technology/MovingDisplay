@@ -21,9 +21,20 @@ void PERFORMANCE::set_display_send_array(){
 	display_send_array[3] = circle_relative_position_array[2];//半径
 
 //光の設定
-	for(int i=0; i<9; i++){
-		display_send_array[i+4] = light_status_array[i];//光のステータスの設定
-	}
+//	for(int i=0; i<9; i++){
+//		display_send_array[i+4] = light_status_array[i];//光のステータスの設定
+//	}
+	display_send_array[4] = light_status_array[0];
+	display_send_array[5] = light_status_array[1];
+	display_send_array[6] = light_status_array[2];
+	display_send_array[7] = light_status_array[3];
+	display_send_array[8] = light_status_array[4];
+	display_send_array[9] = light_status_array[5];
+	display_send_array[10] = light_status_array[6];
+	display_send_array[11] = light_status_array[7];
+	display_send_array[12] = light_status_array[8];
+
+
 
 //おさかなさん
 	for(int i=0; i<6; i++){
@@ -134,14 +145,14 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		light_status_array[8] = V_standard;//frame_V
 
 	}else if(perform_array[3] == 3){
-		light_status_array[0] = perform_array[0] + 128;//circle_H
+		light_status_array[0] = perform_array[0] + 80;//circle_H
 			light_status_array[0] %= 256;
 		light_status_array[1] = S_standard;//circle_S
 		light_status_array[2] = V_standard;//circle_V
 		light_status_array[3] = perform_array[0];//background_H
 		light_status_array[4] = S_standard;//background_S
 		light_status_array[5] = V_standard;//background_V
-		light_status_array[6] = perform_array[0] + 128;//枠表示
+		light_status_array[6] = perform_array[0] + 160;//枠表示
 			light_status_array[6] %= 256;
 		light_status_array[7] = S_standard;//frame_S
 		light_status_array[8] = V_standard;//frame_V
