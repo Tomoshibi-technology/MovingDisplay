@@ -2,17 +2,6 @@ import pygame
 from pygame.locals import *
 import time
 import math
-import serial
-import struct
-
-def send( buf ):
-	while True:
-		if ser.out_waiting == 0: #送信待ちのデータが0になるのを確認
-			break
-	for b in buf:
-		a = struct.pack("B", b) #符号なし8ビットのバイナリ形式にする
-		ser.write(a) #1byte送信する
-	ser.flush() #全て送信するまで待機
 
 class joyconState:
 	def __init__(self):
@@ -23,17 +12,6 @@ class joyconState:
 		self.posX=0
 		self.posY=0
 
-ser = serial.Serial(
-	port = "/dev/cu.wchusbserial110",
-	baudrate = 115200,
-	parity = serial.PARITY_NONE,
-	bytesize = serial.EIGHTBITS,
-	stopbits = serial.STOPBITS_ONE,
-	#timeout = None,
-	#xonxoff = 0,
-	#rtscts = 0,
-)
-
 def main() :
 	pygame.init()
 
@@ -42,8 +20,6 @@ def main() :
 	print(f"ジョイスティック名: {joys.get_name()}")
 	print(f"ボタンの数: {joys.get_numbuttons()}")
 	print(f"軸の数: {joys.get_numaxes()}")
-
-
 
 	# イベントループで入力を監視
 	while True:
@@ -89,7 +65,7 @@ def main() :
 		# 0-255の範囲にスケーリング
 		rotate = int(raw_rotate / 360 * 255)  # 回転角度を0-255にスケーリング
 		speed = int(min(raw_speed, 1.0) * 255)  # スピードを0-1に収めた上で0-255にスケーリング
-		if speed < 80:
+		if speed < 30:
 			speed=0
 			rotate=0
 		if speed==250:
@@ -99,17 +75,9 @@ def main() :
 		print(f"rotate={rotate} speed={speed}")
 
 		#ボタンの処理
-		mode=1
+		mode=0
 		if jstate.X==1:
 			mode=3
-
-		startbyte=[250] #スタートバイトは250
-		send(startbyte)
-		x = [125, rotate, speed, mode]
-		send(x)
-
-		time.sleep(0.02)
-		
 
 if __name__ == '__main__':
 	pygame.init()
