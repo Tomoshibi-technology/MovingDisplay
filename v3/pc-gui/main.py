@@ -22,6 +22,8 @@ class joyconState:
 		self.B=0
 		self.posX=0
 		self.posY=0
+		self.sr=0
+		self.sl=0
 
 ser = serial.Serial(
 	port = "/dev/cu.wchusbserial110",
@@ -46,6 +48,12 @@ def main() :
 
 
 	# イベントループで入力を監視
+	Hue=0
+	toggleA=0
+	preA=0
+	toggleB=0
+	preB=0
+
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.JOYBUTTONDOWN:
@@ -58,6 +66,10 @@ def main() :
 					jstate.Y=1
 				elif event.button==3:
 					jstate.B=1
+				elif event.button==9:
+					jstate.sl=1
+				elif event.button==10:
+					jstate.sr=1
 				else:
 					pass
 			elif event.type == pygame.JOYBUTTONUP:
@@ -70,6 +82,10 @@ def main() :
 					jstate.Y=0
 				elif event.button==3:
 					jstate.B=0
+				elif event.button==9:
+					jstate.sl=0
+				elif event.button==10:
+					jstate.sr=0
 				else:
 					pass
 			elif event.type == pygame.JOYAXISMOTION:
@@ -78,7 +94,11 @@ def main() :
 					jstate.posX=event.value
 				elif event.axis==1:
 					jstate.posY=event.value
-		# print(f"X={jstate.X} Y={jstate.Y} A={jstate.A} B={jstate.B} posX={jstate.posX} posY={jstate.posY}")
+		if jstate.posX<0.1 and jstate.posX>-0.1:
+			if jstate.posY<0.1 and jstate.posY>-0.1:
+				jstate.posX=0
+				jstate.posY=0
+		# print(f"X={jstate.X} Y={jstate.Y} A={jstate.A} B={jstate.B} posX={jstate.posX} posY={jstate.posY} sr={jstate.sr} sl={jstate.sl}")
 		
 		# ここから送信用の計算
 		raw_rotate = 180/math.pi * math.atan2(jstate.posY, jstate.posX) +180
@@ -89,24 +109,58 @@ def main() :
 		# 0-255の範囲にスケーリング
 		rotate = int(raw_rotate / 360 * 255)  # 回転角度を0-255にスケーリング
 		speed = int(min(raw_speed, 1.0) * 255)  # スピードを0-1に収めた上で0-255にスケーリング
-		if speed < 80:
+		if speed < 50:
 			speed=0
 			rotate=0
-		if speed==250:
-			speed=251
-		if rotate==250:
-			rotate=251
-		print(f"rotate={rotate} speed={speed}")
+		# print(f"rotate={rotate} speed={speed}")
 
-		#ボタンの処理
-		mode=1
+		#---ボタンの処理---
+		#toggle処理
+		if jstate.A==1 and preA==0:
+			toggleA=1-toggleA
+			if toggleB==1:
+				toggleB=0
+		preA=jstate.A
+		if jstate.B==1 and preB==0:
+			toggleB=1-toggleB
+			if toggleA==1:
+				toggleA=0
+		preB=jstate.B
+		# print(f"toggleA={toggleA} toggleB={toggleB}")
+
+		#modeの処理
 		if jstate.X==1:
 			mode=3
+			toggleA=0
+			toggleB=0
+		elif toggleA==1:
+			mode=0
+		elif toggleB==1:
+			mode=2
+		else:
+			mode=1
 
+		#色の処理
+		if jstate.sr==1:
+			Hue+=1
+			if Hue>255:
+				Hue=0
+		if jstate.sl==1:
+			Hue-=1
+			if Hue<0:
+				Hue=255
+
+		#送信
 		startbyte=[250] #スタートバイトは250
 		send(startbyte)
-		x = [125, rotate, speed, mode]
+		# x = [125, rotate, speed, mode]
+		x = [Hue, rotate, speed, mode]
+		for i in range(4):
+			if x[i]==250:
+				x[i]=251
+				# print("over-------------------------")
 		send(x)
+		print(f"Hue={Hue} rotate={rotate} speed={speed} mode={mode}")
 
 		time.sleep(0.02)
 		
