@@ -1,0 +1,16 @@
+../Core/Src/main.cpp:152:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	16	static
+../Core/Src/main.cpp:164:5:int main()	192	static
+../Core/Src/main.cpp:371:6:void SystemClock_Config()	88	static
+../Core/Src/main.cpp:425:13:void MX_I2C1_Init()	8	static
+../Core/Src/main.cpp:459:13:void MX_TIM2_Init()	32	static
+../Core/Src/main.cpp:504:13:void MX_TIM4_Init()	64	static
+../Core/Src/main.cpp:563:13:void MX_UART5_Init()	8	static
+../Core/Src/main.cpp:596:13:void MX_USART2_UART_Init()	8	static
+../Core/Src/main.cpp:629:13:void MX_USART3_UART_Init()	8	static
+../Core/Src/main.cpp:662:13:void MX_USART6_UART_Init()	8	static
+../Core/Src/main.cpp:693:13:void MX_DMA_Init()	16	static
+../Core/Src/main.cpp:714:13:void MX_GPIO_Init()	48	static
+../Core/Src/main.cpp:758:6:void speed_set(int, int, int, int16_t*, float)	64	static
+../Core/Src/main.cpp:800:6:void set_array(int16_t*, uint8_t*)	32	static
+../Core/Src/main.cpp:810:6:void readBuf(UART_HandleTypeDef*, uint8_t*, int, uint8_t*, int, uint8_t, uint8_t*, uint8_t*, uint16_t*, uint16_t*, uint8_t)	56	static
+../Core/Src/main.cpp:895:6:void Error_Handler()	4	static,ignoring_inline_asm
