@@ -1,5 +1,5 @@
 
-### 送信プロトコル
+### 送信プロトコル(JoyConRを使ってね)
 
 5byteで送る
 - 250, hue, rotate, speed, mode 
