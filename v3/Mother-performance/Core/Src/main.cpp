@@ -81,7 +81,7 @@ int16_t ref_speed_polar[3] = {0, 0, 0};//target speed by polar coordinate(r', Φ
 
 
 ////performance data////
-uint16_t perform[4] = {250, 250, 250, 250};//{hue, θ', r', mode}
+uint16_t perform[4] = {0, 0, 0, 0};//{hue, θ', r', mode}
 
 
 ////display position////
@@ -92,15 +92,15 @@ int16_t fish_relative_position[18] = {0};//{mode0, x0, y0, mode1, x1, y1, mode2,
 ////send data to motor////
 int16_t motor_speed[4]={0, 0, 0, 0};//each motor speed
 uint8_t motor_send_array[12] = {250, 210, 210, 251, 210, 210, 252, 210, 210, 253, 210, 210};//for sending array
+
 int8_t motor_stop_flag = 0;
 int8_t motor_shdn_flag = 0;
 
 
 ////send data to display////
-int16_t display[31] = {250};
+uint8_t display_send_array[31] = {250};
 //{startBit, x, y, r, circle_H, circle_S, circle_V,
 		//background_H, background_S, background_V, frame_H, frame_S, frame_V}
-uint8_t display_send_array[31];
 
 
 ////communication buffers////
@@ -125,64 +125,6 @@ uint16_t error_counterB = 0;
 ////other////
 int zero_thr = 25;
 int dclr_thr = 100;
-
-
-
-
-//
-//
-//int16_t motor_speed[4]={0, 0, 0, 0};
-//uint8_t motor_send_array[12] = {250, 210, 210, 251, 210, 210, 252, 210, 210, 253, 210, 210};
-//
-//uint8_t rxDataX[3]={};
-//uint8_t rxDataY[3]={};
-//
-//int16_t position[3] = {0, 0, 0};//{x, y, speed}
-//float rotate;
-//
-//int16_t circle_position[3] = {};//{x, y, r} r : radius
-//int16_t fish_position[18] = {0};//{mode0, x0, y0, mode1, x1, y1, mode2, x2, y2, ...}
-//
-//int16_t p_position[3] = {0, 0, 0};//{x, y, speed}
-//int16_t dposition[2] = {0,0};//delta {x,y}
-//
-//int16_t display[31] = {250};
-////{startBit, x, y, r, circle_H, circle_S, circle_V,
-//		//background_H, background_S, background_V, frame_H, frame_S, frame_V}
-//
-////int16_t cur_position_rec[2];//{x, y}
-////int16_t cur_position_pol[2];//{r, degree}
-//
-//
-////int16_t now_speed_pol[2] = {0};//{|r'|, degree}、現在の極速度ベクトル、デモ用に追�?
-//int16_t cur_speed_pol[2] = {0};//{|r'|, degree}、目標極速度ベクトル、デモ用に追�?
-//
-//
-//uint8_t rxBufA[64]={0};
-//uint8_t rxDataA[4]={0,0,0,0};
-//uint8_t p_wrtptA = 0;
-//uint8_t p_rdptA = 0;
-//uint16_t stop_counterA = 0;
-//uint16_t error_counterA = 0;
-//
-//uint8_t rxBufB[64]={0};
-//uint8_t rxDataB[3]={0,0,0};
-//uint8_t p_wrtptB = 0;
-//uint8_t p_rdptB = 0;
-//uint16_t stop_counterB = 0;
-//uint16_t error_counterB = 0;
-//
-//uint16_t perform[4] = {250, 250, 250, 250};//{mode, count, beat, hue}
-//
-//uint16_t dtime;
-//
-//int8_t stop_flag = 0;
-//
-//int zero_thr = 25;
-//int dclr_thr = 100;
-//
-//
-//uint8_t display_send_array[31];
 
 
 
@@ -256,7 +198,7 @@ int main(void)
   HAL_GPIO_WritePin(Servo_ON_GPIO_Port, Servo_ON_Pin, GPIO_PIN_SET);
 
   HAL_TIM_Base_Start_IT(&htim2);
-  HAL_UART_Transmit(&huart6, send_array, 12, 10);
+  HAL_UART_Transmit(&huart6, motor_send_array, 12, 10);
 
   HAL_UART_Receive_DMA(&huart5,rxBufA,64);
   HAL_UART_Receive_DMA(&huart2,rxBufB,64);
@@ -287,11 +229,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  PERFORMANCE performance(perform, display, circle_relative_position, fish_relative_position, now_position);
+  PERFORMANCE performance(perform, display_send_array, circle_relative_position, fish_relative_position, now_position);
 
   uint32_t Ltika_pcounter = m_counter;
   uint32_t d_pcounter = m_counter;
-  uint32_t speed_pcounter = m_counter;
 
   uint8_t OdoX_ID[3] = {248, 210, 210};
   uint8_t OdoY_ID[3] = {249, 210, 210};
@@ -299,21 +240,6 @@ int main(void)
   int16_t speed;
   int16_t p_speed = 0;
   int16_t degree;
-
-//setup past_position
-  HAL_UART_Transmit(&huart6, OdoX_ID, 3, 1);
-  if(HAL_UART_Receive(&huart6, rxDataX, 3, 1) == HAL_OK){
-    HAL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
-  }else{}
-  past_position[0] = rxDataX[1] + rxDataX[2]*200 - 20000;
-
-  HAL_UART_Transmit(&huart6, OdoY_ID, 3, 1);
-  if(HAL_UART_Receive(&huart6, rxDataY, 3, 1) == HAL_OK){
-    HAL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
-  }else{}
-  past_position[1] = rxDataY[1] + rxDataY[2]*200 - 20000;
-
-//  speed_pcounter = m_counter;
 
 
 ////START loop////
@@ -327,7 +253,6 @@ int main(void)
 	now_mcounter = m_counter - rst_mcounter;
 
 ////START get NOW-STATUS////
-
 //get rotate
 	bno055.getEulerAngles(heading, roll, pitch);
 	now_position[2] = int(heading * 50.0);
@@ -345,12 +270,10 @@ int main(void)
 	  HAL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
 	}else{}
 	now_position[1] = rxDataY[1] + rxDataY[2]*200 - 20000;
-
 ////END get NOW-STATUS////
 
 
 ////START get PERFORMANCE STATUS////
-
 //get perform[] from TweLite
 	readBuf(&huart5, rxBufA, 64, rxDataA, 4, 0, &p_wrtptA, &p_rdptA, &stop_counterA, &error_counterA, 10);
 
@@ -359,45 +282,38 @@ int main(void)
 	perform[2] = rxDataA[2];
 	perform[3] = rxDataA[3];
 
-//get speed input
-	ref_speed_polar[0] = perform[2] * 25 / 10;//速度
-	ref_speed_polar[1] = perform[1] * 45 / 32;//角度
-	ref_speed_polar[1] = 270 - ref_speed_polar[1];
+	//	perform[0] = hue
+	//	perform[1] = θ
+	//	perform[2] = r
+	//	perform[3] = mode
 
-//motor stop flag
-	if(perform_array[3] == 0){
+//interpreter data
+	ref_speed_polar[0] = perform[2] * 25 / 10;//速度
+	ref_speed_polar[1] = perform[1] * 45 / 32;//角度,360/32*45,左が0で前が270なので反時計回り
+//	ref_speed_polar[1] = 270 - ref_speed_polar[1];
+////END get PERFORMANCE STATUS////
+
+
+////START do MOVEMENT////
+//motor shutdown flag
+	if(perform[3] == 0){
 		motor_shdn_flag = 0;//stop
-	}else if(perform_array[3] == 1 || perform_array[3] == 2 || perform_array[3] == 3){
+	}else if(perform[3] == 1 || perform[3] == 2 || perform[3] == 3){
 		motor_shdn_flag = 1;//move
 	}else{
 		motor_shdn_flag = 0;//stop
 	}
 
-////END get PERFORMANCE STATUS////
-
-
-////START calculate display drawing////
-
-	performance.cal_drawing_status_performance(m_counter);
-
-////END calculate display drawing////
-
-
-////START do MOVEMENT////
-
+//calculate speed
 	//さすがに速度制御かけたい
-
 	speed = ref_speed_polar[0];
 	speed = ((speed*8) + (p_speed*2) + 10-1)/ 10;//joystick入力のローパス
 	p_speed = speed;
 
 
 	degree = ref_speed_polar[1];
-
-
 //calculate each motor speed from movement speed
-	speed_set(now_position[2], speed, degree, motor_speed, 0.7);
-
+	speed_set(now_position[2], speed, degree, motor_speed, 0.7);//回転制御したい
 //calculate sending array from motor speed
 	set_array(motor_speed, motor_send_array);
 
@@ -419,42 +335,18 @@ int main(void)
 		}
 		HAL_UART_Transmit(&huart6, motor_send_array, 12, 1);
 	}
+////END do MOVEMENT////
+
+
+////START display drawing////
+//setting drawing status
+	performance.cal_drawing_status_performance(m_counter);
 
 //send to panel
-	for(int i=0; i<31; i++){
-		display_send_array[i] = display[i];
-	}
-
-
-	int16_t circle_fixing[8];
-	int16_t fish_fixing[8];
-	circle_fixing[0] = circle_position[0] - position[0];//�?の相対距離算�?�
-	circle_fixing[0] = circle_fixing[0] / 10;//cmになおす
-	circle_fixing[0] = 24 + circle_fixing[0];//原点を左下にした値にする
-	display_send_array[1] = circle_fixing[0]+100;//送信用に100たす
-
-	display_send_array[2] = circle_position[1] / 10 + 100;//上下方�?
-	display_send_array[3] = circle_position[2] / 10;//送信用配�?�に格�?
-
-
-	for(int i=0; i<6; i++){//おさかなさん
-		fish_fixing[i+2] = fish_position[3*i+1] - position[0];
-		fish_fixing[i+2] = fish_fixing[i+2] / 10;
-		fish_fixing[i+2] = 24 + fish_fixing[i+2];
-
-		display_send_array[3*i+13] = fish_position[3*i];
-		display_send_array[3*i+14] = fish_fixing[i+2]+100;
-		display_send_array[3*i+15] = fish_position[3*i+2] / 10 + 100;
-	}
-
-
-	for(int i=0; i<30; i++){
-		if(display_send_array[i+1] == 250){display_send_array[i+1]++;}
-		else{}
-	}
+	performance.get_drawing_status_performance();
+	performance.set_display_send_array();
 	HAL_UART_Transmit(&huart3, display_send_array, 31, 10);
-
-////END do MOVEMENT////
+////END calculate display drawing////
 
 
 //Lチカ

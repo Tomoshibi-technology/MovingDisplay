@@ -1,0 +1,4 @@
+../Core/Src/performance.cpp:4:1:PERFORMANCE::PERFORMANCE(uint16_t*, uint8_t*, int16_t*, int16_t*, int16_t*)	24	static
+../Core/Src/performance.cpp:17:6:void PERFORMANCE::set_display_send_array()	32	static
+../Core/Src/performance.cpp:42:6:void PERFORMANCE::get_drawing_status_performance()	24	static
+../Core/Src/performance.cpp:64:6:void PERFORMANCE::cal_drawing_status_performance(uint32_t)	16	static
