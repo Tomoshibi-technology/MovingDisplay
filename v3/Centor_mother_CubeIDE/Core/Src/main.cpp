@@ -176,17 +176,17 @@ int main(void)
 	ssd1306_Fill(Black);
 
 	ssd1306_SetCursor(0,0);
-    snprintf(buf, sizeof(buf), "t:%3d r:%3d", theta, radius);
+    snprintf(buf, sizeof(buf), "0:%3d 1:%3d", Data[0], Data[1]);
 	ssd1306_WriteString(buf,Font_11x18,White);
 
 	ssd1306_SetCursor(0,20);
-//    snprintf(buf, sizeof(buf), "vol:%d", vol);
-//	ssd1306_WriteString(buf,Font_11x18,White);
-	if(vol==0){
-		ssd1306_WriteString("vol:Display",Font_11x18,White);
-	}else{
-		ssd1306_WriteString("vol:Arm",Font_11x18,White);
-	}
+    snprintf(buf, sizeof(buf), "2:%3d 3:%3d", Data[2], Data[3]);
+	ssd1306_WriteString(buf,Font_11x18,White);
+//	if(vol==0){
+//		ssd1306_WriteString("vol:Display",Font_11x18,White);
+//	}else{
+//		ssd1306_WriteString("vol:Arm",Font_11x18,White);
+//	}
 
 	ssd1306_SetCursor(0,40);
     snprintf(buf, sizeof(buf), "mode:%d", mode);
@@ -194,7 +194,7 @@ int main(void)
 
 	ssd1306_UpdateScreen(&hi2c1);
 
-	uint8_t send_array[5] = {250,Data[3],theta,radius,mode};//start, h, x, y, mode
+	uint8_t send_array[5] = {250,Data[0],Data[1],Data[2],Data[3]};//start, h, x, y, mode
 	HAL_UART_Transmit(&huart5, send_array, 5, 1);
   }
   /* USER CODE END 3 */
