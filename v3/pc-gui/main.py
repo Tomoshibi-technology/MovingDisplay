@@ -39,17 +39,15 @@ ser = serial.Serial(
 
 def main() :
 	pygame.init()
-	# SURFACE = pygame.display.set_mode((400, 300))    # サイズを指定して画面を作成
-	# pygame.display.set_caption("GAMEをつくろう")    # タイトル文字を指定
-	# font = pygame.font.Font(None, 60)   
+	SURFACE = pygame.display.set_mode((1280, 720))    # サイズを指定して画面を作成
+	pygame.display.set_caption("MovingDisplayController")    # タイトル文字を指定
+	font = pygame.font.Font(None, 60)
 
 	jstate=joyconState()
 
 	print(f"ジョイスティック名: {joys.get_name()}")
 	print(f"ボタンの数: {joys.get_numbuttons()}")
 	print(f"軸の数: {joys.get_numaxes()}")
-
-
 
 	# イベントループで入力を監視
 	Hue=0
@@ -60,6 +58,7 @@ def main() :
 	preB=0
 
 	while True:
+		# イベント処理
 		for event in pygame.event.get():
 			if event.type == pygame.JOYBUTTONDOWN:
 				print(f"ボタン {event.button} が押されました")
@@ -107,7 +106,7 @@ def main() :
 			if jstate.posY<0.1 and jstate.posY>-0.1:
 				jstate.posX=0
 				jstate.posY=0
-		# print(f"X={jstate.X} Y={jstate.Y} A={jstate.A} B={jstate.B} posX={jstate.posX} posY={jstate.posY} sr={jstate.sr} sl={jstate.sl}")
+		print(f"X={jstate.X} Y={jstate.Y} A={jstate.A} B={jstate.B} posX={jstate.posX} posY={jstate.posY} sr={jstate.sr} sl={jstate.sl}")
 		
 		# ここから送信用の計算
 		raw_rotate = 180/math.pi * math.atan2(jstate.posY, jstate.posX) +180
@@ -175,7 +174,36 @@ def main() :
 				x[i]=251
 				# print("over-------------------------")
 		send(x)
-		print(f"Hue={Hue} rotate={rotate} speed={speed} mode={mode}")
+		# print(f"Hue={Hue} rotate={rotate} speed={speed} mode={mode}")
+
+		# GUIの表示
+		SURFACE.fill((255,255,255))
+		font = pygame.font.Font(None, 60)
+		text = font.render(f"Hue={Hue}", True, (50,50,50))
+		SURFACE.blit(text, [50, 50])
+		pygame.draw.rect(SURFACE, (0,0,0), (50,100,300,300), 5)  # 枠線のみ（枠線の太さ＝2）
+		pygame.draw.circle(SURFACE, (128,128,255), (50+150+100*jstate.posX, 100+150+100*jstate.posY), 50, 5)    # 円周の太さ2
+		text = font.render(f"X={jstate.X} Y={jstate.Y} A={jstate.A} B={jstate.B}", True, (50,50,50))
+		SURFACE.blit(text, [50, 450])
+		text = font.render(f"sr={jstate.sr} sl={jstate.sl} home={jstate.home}", True, (50,50,50))
+		SURFACE.blit(text, [50, 500])
+		text = font.render(f"mode={mode}", True, (50,50,50))
+		SURFACE.blit(text, [50, 550])
+		text = font.render(f"speed={speed}", True, (50,50,50))
+		SURFACE.blit(text, [50, 600])
+
+		font = pygame.font.Font(None, 200)
+		if mode==0:
+			text = font.render(f"Hand", True, (50,50,50))
+		elif mode==1:
+			text = font.render(f"Normal", True, (50,50,50))
+		elif mode==2:
+			text = font.render(f"Fish", True, (50,50,50))
+		elif mode==3:
+			text = font.render(f"Fix", True, (50,50,50))
+		SURFACE.blit(text, [450, 200])
+
+		pygame.display.update()
 
 		time.sleep(0.02)
 		
