@@ -24,9 +24,10 @@ class joyconState:
 		self.posY=0
 		self.sr=0
 		self.sl=0
+		self.home=0
 
 ser = serial.Serial(
-	port = "/dev/cu.wchusbserial110",
+	port = "/dev/cu.wchusbserial10",
 	baudrate = 115200,
 	parity = serial.PARITY_NONE,
 	bytesize = serial.EIGHTBITS,
@@ -38,6 +39,9 @@ ser = serial.Serial(
 
 def main() :
 	pygame.init()
+	# SURFACE = pygame.display.set_mode((400, 300))    # サイズを指定して画面を作成
+	# pygame.display.set_caption("GAMEをつくろう")    # タイトル文字を指定
+	# font = pygame.font.Font(None, 60)   
 
 	jstate=joyconState()
 
@@ -49,6 +53,7 @@ def main() :
 
 	# イベントループで入力を監視
 	Hue=0
+
 	toggleA=0
 	preA=0
 	toggleB=0
@@ -57,7 +62,7 @@ def main() :
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.JOYBUTTONDOWN:
-				# print(f"ボタン {event.button} が押されました")
+				print(f"ボタン {event.button} が押されました")
 				if event.button==0:
 					jstate.X=1
 				elif event.button==1:
@@ -70,6 +75,8 @@ def main() :
 					jstate.sl=1
 				elif event.button==10:
 					jstate.sr=1
+				elif event.button==5:
+					jstate.home=1
 				else:
 					pass
 			elif event.type == pygame.JOYBUTTONUP:
@@ -86,6 +93,8 @@ def main() :
 					jstate.sl=0
 				elif event.button==10:
 					jstate.sr=0
+				elif event.button==5:
+					jstate.home=0
 				else:
 					pass
 			elif event.type == pygame.JOYAXISMOTION:
@@ -121,11 +130,13 @@ def main() :
 			if toggleB==1:
 				toggleB=0
 		preA=jstate.A
+		
 		if jstate.B==1 and preB==0:
 			toggleB=1-toggleB
 			if toggleA==1:
 				toggleA=0
 		preB=jstate.B
+		
 		# print(f"toggleA={toggleA} toggleB={toggleB}")
 
 		#modeの処理
@@ -139,6 +150,10 @@ def main() :
 			mode=2
 		else:
 			mode=1
+
+		#speedの処理
+		if jstate.home==0:
+			speed=int(speed/2)
 
 		#色の処理
 		if jstate.sr==1:
