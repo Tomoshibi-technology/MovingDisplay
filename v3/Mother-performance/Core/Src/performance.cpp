@@ -38,9 +38,9 @@ void PERFORMANCE::set_display_send_array(){
 
 //おさかなさん
 	for(int i=0; i<6; i++){
-		display_send_array[3*i+13] = fish_position_array[3*i];//モード設定
-		display_send_array[3*i+14] = fish_relative_position_array[i+2] + 100;//左右、送信用に100たす
-		display_send_array[3*i+15] = fish_position_array[3*i+2] / 10 + 100;//上下、送信用に100たす
+		display_send_array[3*i+13] = fish_relative_position_array[3*i];//モード設定
+		display_send_array[3*i+14] = fish_relative_position_array[3*i+1] + 100;//左右、送信用に100たす
+		display_send_array[3*i+15] = fish_relative_position_array[3*i+2] + 100;//上下、送信用に100たす
 	}
 
 //250チェック
@@ -67,7 +67,7 @@ void PERFORMANCE::get_drawing_status_performance(){
 		fish_relative_position_array[3*i+1] /= 10;//cmになおす
 		fish_relative_position_array[3*i+1] += 24;//原点を左下にした値にする
 
-		fish_relative_position_array[3*i] = fish_position_array[3*i+2] / 10;//上下方向、cmになおす
+		fish_relative_position_array[3*i+2] = fish_position_array[3*i+2] / 10;//上下方向、cmになおす
 	}
 }
 
@@ -110,8 +110,8 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 
 
 //光の設定
-	if(perform_array[3] == 0){
-		light_status_array[0] = perform_array[0] + 128;//circle_H
+	if(perform_array[3] == 0){//フリー移動
+		light_status_array[0] = perform_array[0] + 80;//circle_H
 		light_status_array[1] = S_standard;//circle_S
 		light_status_array[2] = V_standard;//circle_V
 		light_status_array[3] = perform_array[0];//background_H
@@ -121,8 +121,8 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		light_status_array[7] = S_standard;//frame_S
 		light_status_array[8] = V_standard;//frame_V
 
-	}else if(perform_array[3] == 1){
-		light_status_array[0] = perform_array[0] + 128;//circle_H
+	}else if(perform_array[3] == 1){//固定移動
+		light_status_array[0] = perform_array[0] + 80;//circle_H
 			light_status_array[0] %= 256;
 		light_status_array[1] = S_standard;//circle_S
 		light_status_array[2] = V_standard;//circle_V
@@ -133,7 +133,7 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		light_status_array[7] = S_standard;//frame_S
 		light_status_array[8] = V_standard;//frame_V
 
-	}else if(perform_array[3] == 2){
+	}else if(perform_array[3] == 2){//おさかな
 		light_status_array[0] = perform_array[0];//circle_H
 		light_status_array[1] = S_standard;//circle_S
 		light_status_array[2] = V_standard;//circle_V
@@ -144,7 +144,7 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		light_status_array[7] = S_standard;//frame_S
 		light_status_array[8] = V_standard;//frame_V
 
-	}else if(perform_array[3] == 3){
+	}else if(perform_array[3] == 3){//枠
 		light_status_array[0] = perform_array[0] + 80;//circle_H
 			light_status_array[0] %= 256;
 		light_status_array[1] = S_standard;//circle_S
@@ -157,8 +157,8 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		light_status_array[7] = S_standard;//frame_S
 		light_status_array[8] = V_standard;//frame_V
 
-	}else{
-		light_status_array[0] = perform_array[0] + 128;//circle_H
+	}else{//例外処理
+		light_status_array[0] = perform_array[0] + 80;//circle_H
 		light_status_array[1] = S_standard;//circle_S
 		light_status_array[2] = V_standard;//circle_V
 		light_status_array[3] = perform_array[0];//background_H
@@ -177,15 +177,15 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		fish_position_array[2] = 150;//Z
 
 		fish_position_array[3] = 2;//ID
-		fish_position_array[4] = circle_position_array[0] + 400;//X
+		fish_position_array[4] = circle_position_array[0] + 150;//X
 		fish_position_array[5] = 300;//Z
 
 		fish_position_array[6] = 2;//ID
-		fish_position_array[6] = circle_position_array[0] - 200;//X
-		fish_position_array[8] = 50;//Z
+		fish_position_array[7] = circle_position_array[0] - 170;//X
+		fish_position_array[8] = 200;//Z
 
 		fish_position_array[9] = 2;//ID
-		fish_position_array[10] = circle_position_array[0] + 700;//X
+		fish_position_array[10] = circle_position_array[0] + 250;//X
 		fish_position_array[11] = 75;//Z
 
 		fish_position_array[12] = 2;//ID
@@ -193,8 +193,8 @@ void PERFORMANCE::cal_drawing_status_performance(uint32_t count){
 		fish_position_array[14] = 250;//Z
 
 		fish_position_array[15] = 2;//ID
-		fish_position_array[16] = circle_position_array[0] - 700;//X
-		fish_position_array[17] = 200;//Z
+		fish_position_array[16] = circle_position_array[0] - 550;//X
+		fish_position_array[17] = 100;//Z
 
 	}else{
 		fish_position_array[0] = 0;//ID

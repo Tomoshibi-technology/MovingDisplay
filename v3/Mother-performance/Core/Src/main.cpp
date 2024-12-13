@@ -307,7 +307,7 @@ int main(void)
 //calculate speed
 	//さすがに速度制御かけたい
 	speed = ref_speed_polar[0];
-	speed = ((speed*8) + (p_speed*2) + 10-1)/ 10;//joystick入力のローパス
+	speed = ((speed*5) + (p_speed*5) + 10-1)/ 10;//joystick入力のローパス
 	p_speed = speed;
 
 
