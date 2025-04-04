@@ -27,7 +27,7 @@ class joyconState:
 		self.home=0
 
 ser = serial.Serial(
-	port = "/dev/cu.wchusbserial10",
+	port = "/dev/cu.wchusbserial210",
 	baudrate = 115200,
 	parity = serial.PARITY_NONE,
 	bytesize = serial.EIGHTBITS,
@@ -152,7 +152,7 @@ def main() :
 
 		#speedの処理
 		if jstate.home==0:
-			speed=int(speed/2)
+			speed=int(speed/16)
 
 		#色の処理
 		if jstate.sr==1:
